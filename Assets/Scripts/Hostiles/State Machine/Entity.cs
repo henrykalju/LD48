@@ -95,11 +95,9 @@ public class Entity : MonoBehaviour
             rb.rotation = angle;
 
             SetVelocity();
-            aliveGO.GetComponent<SpriteRenderer>().color = Color.blue;
         }
         if (checkFailed == 0)
         {
-            aliveGO.GetComponent<SpriteRenderer>().color = Color.green;
             float addangle = FindTurnSide();
             angle = (angle + addangle) % 360;
             rb.rotation = angle;
@@ -108,7 +106,6 @@ public class Entity : MonoBehaviour
         }
         if (checkFailed == 1)
         {
-            aliveGO.GetComponent<SpriteRenderer>().color = Color.red;
             float addangle = FindTurnSide() * 0.2f;
             angle = (angle + addangle) % 360;
             rb.rotation = angle;
@@ -159,7 +156,6 @@ public class Entity : MonoBehaviour
         for (int i = 0; i < fishies.Length; i++)
         {
             Vector3 dir = fishies[i].transform.position - playerCheck.position;
-            Debug.DrawRay(playerCheck.position, dir,Color.green);
             if (Physics2D.Raycast(playerCheck.position, dir, entityData.playerDetectRange, entityData.whatIsPlayer))
             {
                 return true;
@@ -196,7 +192,6 @@ public class Entity : MonoBehaviour
     {
         GameObject fish = getNearestFish();
         if (!fish) {
-            Debug.Log("NO NEAREST FISH");
             isAttacking = false;
             return;
         }
@@ -206,6 +201,8 @@ public class Entity : MonoBehaviour
         rb.rotation = angle;
         speed = entityData.attackSpeed;
         SetVelocity();
+    }
+    public virtual void GetVector3ToFish(){
         
     }
 }

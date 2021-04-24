@@ -14,12 +14,13 @@ public class E1_AttackState : AttackState
     public override void Enter()
     {
         hostile.isAttacking = true;
+        Dash();
         base.Enter();
     }
     public override void Exit()
     {
         hostile.isAttacking = false;
-        
+
         base.Exit();
     }
 
@@ -36,8 +37,11 @@ public class E1_AttackState : AttackState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        //AJA KALA TAGa
         hostile.GoToFish();
 
+    }
+    private void Dash(){
+        GameObject fish = entity.getNearestFish();
+        entity.SetVelocity();
     }
 }
