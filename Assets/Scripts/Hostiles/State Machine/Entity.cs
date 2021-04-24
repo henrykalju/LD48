@@ -155,6 +155,7 @@ public class Entity : MonoBehaviour
         {
             return false;
         }
+
         GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
         for (int i = 0; i < fishies.Length; i++)
         {
@@ -162,6 +163,11 @@ public class Entity : MonoBehaviour
             if (Physics2D.Raycast(playerCheck.position, (Vector2)fishies[i].transform.position, entityData.playerDetectRange*10, entityData.whatIsPlayer))
             {
                 return true;
+            }
+
+            if (Physics2D.CircleCast(playerCheck.position, 0.5f, (Vector2)fishies[i].transform.position, entityData.playerDetectRange * 10, entityData.whatIsPlayer))
+            {
+                Debug.Log("HELLASOIFJASD");
             }
         }
         return false;
