@@ -9,6 +9,7 @@ public class MoveState : State
     // 0 - no 1 - front 2 - right 3 - left
     protected int isDetectingWall;
     protected bool isPlayerInRange;
+    protected bool isTired;
 
     public MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName)
     {
@@ -17,6 +18,7 @@ public class MoveState : State
 
     public override void Enter()
     {
+        isTired = true;
         base.Enter();
         entity.SetVelocity();
         isPlayerInRange = entity.CheckPlayerInRange();
@@ -30,6 +32,10 @@ public class MoveState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (Time.time >= startTime + stateData.tiredDuration)
+        {
+            isTired = false;
+        }
     }
 
     public override void PhysicsUpdate()

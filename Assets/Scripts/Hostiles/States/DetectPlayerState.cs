@@ -6,6 +6,7 @@ public class DetectPlayerState : State
 {
     protected D_DetectPlayerState stateData;
     protected bool isReadyToInteract;
+    protected bool timedOut;
     public DetectPlayerState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_DetectPlayerState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -14,6 +15,7 @@ public class DetectPlayerState : State
     public override void Enter()
     {
         base.Enter();
+        timedOut = false;
         isReadyToInteract = false;
     }
     public override void Exit()
@@ -25,6 +27,9 @@ public class DetectPlayerState : State
     {
         base.LogicUpdate();
 
+        if (isReadyToInteract && !entity.CheckPlayerInRange()) {
+            timedOut = true;
+        }
         if (Time.time >= startTime + stateData.standByTime)
         {
             isReadyToInteract = true;
