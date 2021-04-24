@@ -19,6 +19,7 @@ public class E1_AttackState : AttackState
     public override void Exit()
     {
         hostile.isAttacking = false;
+        
         base.Exit();
     }
 

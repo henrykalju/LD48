@@ -158,8 +158,9 @@ public class Entity : MonoBehaviour
         GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
         for (int i = 0; i < fishies.Length; i++)
         {
-            Debug.DrawLine(fishies[i].transform.position, playerCheck.position,Color.green);
-            if (Physics2D.Raycast(playerCheck.position, (Vector2)fishies[i].transform.position, entityData.playerDetectRange*10, entityData.whatIsPlayer))
+            Vector3 dir = fishies[i].transform.position - playerCheck.position;
+            Debug.DrawRay(playerCheck.position, dir,Color.green);
+            if (Physics2D.Raycast(playerCheck.position, dir, entityData.playerDetectRange, entityData.whatIsPlayer))
             {
                 return true;
             }
@@ -175,14 +176,15 @@ public class Entity : MonoBehaviour
         }
         GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
         GameObject nearestFish = null;
-        float nearestFishDistance = entityData.playerDetectRange*10;
+        float nearestFishDistance = entityData.playerDetectRange;
         for (int i = 0; i < fishies.Length; i++)
         {
-            Debug.DrawLine(fishies[i].transform.position, playerCheck.position,Color.yellow);
-            float fishDistance = Physics2D.Raycast(playerCheck.position,(Vector2) fishies[i].transform.position, entityData.playerDetectRange*10, entityData.whatIsPlayer).distance;
+
+            Vector3 dir = fishies[i].transform.position - playerCheck.position;
+            float fishDistance = Physics2D.Raycast(playerCheck.position, dir, entityData.playerDetectRange, entityData.whatIsPlayer).distance;
+
             if (fishDistance < nearestFishDistance && fishDistance != 0)
             {
-                Debug.Log(fishDistance);
                 nearestFish = fishies[i];
                 nearestFishDistance = fishDistance;
             }
@@ -194,6 +196,7 @@ public class Entity : MonoBehaviour
     {
         GameObject fish = getNearestFish();
         if (!fish) {
+            Debug.Log("NO NEAREST FISH");
             isAttacking = false;
             return;
         }

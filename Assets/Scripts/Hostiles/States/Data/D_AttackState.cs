@@ -6,6 +6,7 @@ using UnityEngine;
 public class D_AttackState : ScriptableObject
 {
     public float chaseDuration = 5.0f;
-    
+    public int maxKillCount = 10;
+
 
 }

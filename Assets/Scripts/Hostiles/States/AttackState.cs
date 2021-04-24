@@ -31,6 +31,9 @@ public class AttackState : State
         {
             isTired = true;
         }
+        if(colliderScript.killedCount>= stateData.maxKillCount){
+            isTired = true;
+        }
     }
 
     public override void PhysicsUpdate()

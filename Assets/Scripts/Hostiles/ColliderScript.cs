@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ColliderScript : MonoBehaviour
 {
-    [SerializeField] D_Entity entityData;
+    [SerializeField] D_AttackState stateData;
     public int killedCount {get;set;}
 
     // Start is called before the first frame update
@@ -13,7 +13,7 @@ public class ColliderScript : MonoBehaviour
         killedCount = 0;
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        if (entityData.maxKillCount>killedCount)
+        if (stateData.maxKillCount>killedCount)
         {
             if (other.gameObject.tag.Equals("Fish")){
                 killedCount++;

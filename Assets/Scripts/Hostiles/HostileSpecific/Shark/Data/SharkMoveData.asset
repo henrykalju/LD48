@@ -9,15 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e642eb72132a454cb9d0c66695e46e1, type: 3}
-  m_Name: Hostile1BaseData
+  m_Script: {fileID: 11500000, guid: 412b987d3004e07488ae6bb4f67ea944, type: 3}
+  m_Name: SharkMoveData
   m_EditorClassIdentifier: 
-  wallCheckDistance: 10
-  movementSpeed: 4
-  playerDetectRange: 10
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 64
+  tiredDuration: 5
