@@ -37,11 +37,11 @@ public class E1_AttackState : AttackState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        hostile.GoToFish();
 
     }
     private void Dash(){
-        GameObject fish = entity.getNearestFish();
-        entity.SetVelocity();
+        float angle = entity.GetAngleFromDir(entity.GetVector3DirToFish(entity.getNearestFish()));
+        entity.rb.rotation = angle;
+        entity.SetVelocity(angle, stateData.attackSpeed);
     }
 }

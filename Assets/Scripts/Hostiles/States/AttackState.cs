@@ -39,5 +39,6 @@ public class AttackState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        entity.CheckIfIsAttacking();
     }
 }
