@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e642eb72132a454cb9d0c66695e46e1, type: 3}
   m_Name: Hostile1BaseData
   m_EditorClassIdentifier: 
-  wallCheckDistance: 5
+  wallCheckDistance: 10
+  movementSpeed: 5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
