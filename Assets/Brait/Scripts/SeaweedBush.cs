@@ -25,8 +25,8 @@ public class SeaweedBush : MonoBehaviour
         {
             SpawnLeaf();
         }
-        transform.position = posToGo;
-        transform.rotation = rotToGo;
+        transform.parent.position = posToGo;
+        transform.parent.rotation = rotToGo;
     }
 
     private void SpawnLeaf()
