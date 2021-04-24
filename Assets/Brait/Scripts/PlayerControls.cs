@@ -14,7 +14,7 @@ public class PlayerControls : MonoBehaviour
 
     private void Start()
     {
-        SpawnFish(100);
+        //SpawnFish(100);
     }
     private void FixedUpdate()
     {
@@ -37,6 +37,7 @@ public class PlayerControls : MonoBehaviour
     private Vector3 GetMouseInWorld()
     {
         Vector2 mousePos = controls.actions["MouseLocation"].ReadValue<Vector2>();
+        Debug.Log(mousePos);
         Vector3 mousePos3 = new Vector3(mousePos.x, mousePos.y, 10);
 
         return(Camera.main.ScreenToWorldPoint(mousePos3));
