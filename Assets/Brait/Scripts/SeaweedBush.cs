@@ -19,7 +19,7 @@ public class SeaweedBush : MonoBehaviour
         rotToGo = rot;
     }
 
-    private void Awake()
+    private void Start()
     {
         for(int i = 0; i < leafCount; i++)
         {

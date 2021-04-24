@@ -39,7 +39,12 @@ public class MapGen : MonoBehaviour
     //NONO
     private Vector3[] punktid_l;
     private Vector3[] punktid_r;
+
+    [SerializeField] private GameObject mesh_prefab;
+    //[SerializeField] private GameObject right_mesh;
     
+    [SerializeField] private GameObject[] props;
+    [SerializeField] private GameObject seaweed;
     
     void Start()
     {
@@ -134,30 +139,27 @@ public class MapGen : MonoBehaviour
         EdgeCollider2D ec_r = lines_r[depth-1].AddComponent<EdgeCollider2D>();
         ec_l.points = punktid_l.Select(i => { return new Vector2(i.x, i.y);}).ToArray();
         ec_r.points = punktid_r.Select(i => { return new Vector2(i.x, i.y);}).ToArray();
-        
 
-        /*
-        MeshCollider mc_l = lines_l[depth - 1].AddComponent<MeshCollider>();
-        MeshCollider mc_r = lines_r[depth - 1].AddComponent<MeshCollider>();
+        GameObject left_mesh_prefab = Instantiate(mesh_prefab);
+        GameObject right_mesh_prefab = Instantiate(mesh_prefab);
+        
         Mesh mesh_l = new Mesh();
         Mesh mesh_r = new Mesh();
-        line_r_l[depth - 1].BakeMesh(mesh_l, true);
-        line_r_r[depth - 1].BakeMesh(mesh_r, true);
-        mc_l.sharedMesh = mesh_l;
-        mc_r.sharedMesh = mesh_r;
-        */
+        left_mesh_prefab.GetComponent<MeshFilter>().mesh = mesh_l;
+        right_mesh_prefab.GetComponent<MeshFilter>().mesh = mesh_r;
+
+        createMesh(mesh_l, punktid_l, true);
+        createMesh(mesh_r, punktid_r, false);
         
-
-
 
         ArrayList goodPlacesOnTheLeft = GETGoodPlacesOnTheLeft();
         if (goodPlacesOnTheLeft.Count > 0)
         {
             //print(goodPlaces.Count);
             //print(goodPlaces[0]);
-            foreach (int place in goodPlacesOnTheLeft)
+            foreach (float[] place in goodPlacesOnTheLeft)
             {
-                int placing = place + (int) Math.Floor(der_length / 2f);
+                int placing = (int) place[0] + (int) Math.Floor(der_length / 2f);
                 Vector3 koht;
                 
                 if (placing >= 0)
@@ -169,6 +171,12 @@ public class MapGen : MonoBehaviour
                     koht = line_r_l[depth - 2].GetPosition(l + placing);
                 }
                 //Instantiate(cube, koht, quaternion.Euler(Vector3.zero));
+                if (Random.Range(0, 1) == 0)
+                {
+                    
+                }
+                GameObject a = Instantiate(seaweed);
+                a.transform.GetChild(0).GetComponent<SeaweedBush>().setPos(koht, Quaternion.Euler(0, 0, -place[1]));
             }
         }
 
@@ -177,9 +185,9 @@ public class MapGen : MonoBehaviour
         {
             //print(goodPlaces.Count);
             //print(goodPlaces[0]);
-            foreach (int place in goodPlacesOnTheRight)
+            foreach (float[] place in goodPlacesOnTheRight)
             {
-                int placing = place + (int) Math.Floor(der_length / 2f);
+                int placing = (int) place[0] + (int) Math.Floor(der_length / 2f);
                 Vector3 koht;
                 
                 if (placing >= 0)
@@ -191,6 +199,8 @@ public class MapGen : MonoBehaviour
                     koht = line_r_r[depth - 2].GetPosition(l + placing);
                 }
                 //Instantiate(cube, koht, quaternion.Euler(Vector3.zero));
+                GameObject a = Instantiate(seaweed);
+                a.transform.GetChild(0).GetComponent<SeaweedBush>().setPos(koht, Quaternion.Euler(0, 0, place[1]));
             }
         }
 
@@ -222,7 +232,7 @@ public class MapGen : MonoBehaviour
                 //Debug.Log(deriv);
                 if (deriv < min_nurk && deriv > 0)
                 {
-                    good.Add(-der_length + i);
+                    good.Add(new float[]{-der_length + i, deriv});
                 }
             }
         }
@@ -242,7 +252,7 @@ public class MapGen : MonoBehaviour
             //Debug.Log(deriv);
             if (deriv < min_nurk && deriv > 0)
             {
-                good.Add(i);
+                good.Add(new float[]{i, deriv});
             }
         }
         return good;
@@ -274,7 +284,7 @@ public class MapGen : MonoBehaviour
                 //Debug.Log(deriv);
                 if (deriv < min_nurk && deriv > 0)
                 {
-                    good.Add(-der_length + i);
+                    good.Add(new float[] {-der_length + i, deriv});
                 }
             }
         }
@@ -294,17 +304,60 @@ public class MapGen : MonoBehaviour
             //Debug.Log(deriv);
             if (deriv < min_nurk && deriv > 0)
             {
-                good.Add(i);
+                good.Add(new float[]{i, deriv});
             }
         }
         return good;
     }
 
-    private void OnTriggerEnter(Collider other)
+    void createMesh(Mesh mesh, Vector3[] line_points, bool left)
     {
-        if (other.tag == "EndOfSection")
+        Vector3[] points = new Vector3[line_points.Length*2];
+        for (int i = 0; i < line_points.Length; i++)
         {
-            UpdateMap();
+            points[i] = line_points[i];
+            points[line_points.Length + i] = new Vector3(left ? -70 : 70, points[i].y, 0);
         }
+
+        int[] tri = new int[(line_points.Length - 1) * 6];
+        for (int i = 0; i < tri.Length; i+=3)
+        {
+            if (left)
+            {
+                if (i % 2 == 0)
+                {
+                    tri[i] = i/3 - i/6;
+                    tri[i + 1] = i/3 + 1 - i/6;
+                    tri[i + 2] = points.Length / 2 + i / 3 - i/6;
+                }
+                else
+                {
+                    tri[i] = i/3 - i/6;
+                    tri[i + 2] = points.Length / 2 + i / 3 - 1 - i/6;
+                    tri[i + 1] = points.Length / 2 + i / 3 - i/6;
+                }
+            }
+            else
+            {
+                if (i % 2 == 0)
+                {
+                    tri[i] = i/3 - i/6;
+                    tri[i + 2] = i/3 + 1 - i/6;
+                    tri[i + 1] = points.Length / 2 + i / 3 - i/6;
+                }
+                else
+                {
+                    tri[i] = i/3 - i/6;
+                    tri[i + 1] = points.Length / 2 + i / 3 - 1 - i/6;
+                    tri[i + 2] = points.Length / 2 + i / 3 - i/6;
+                }
+            }
+            
+        }
+
+        mesh.vertices = points;
+        mesh.triangles = tri;
+
     }
+    
 }
