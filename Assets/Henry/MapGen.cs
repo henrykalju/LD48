@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class MapGen : MonoBehaviour
@@ -33,7 +34,7 @@ public class MapGen : MonoBehaviour
     private float noise_seed;
 
     [SerializeField] private int der_length;
-    [SerializeField] private float der;
+    [FormerlySerializedAs("der")] [SerializeField] private float min_nurk;
     
     //NONO
     private Vector3[] punktid_l;
@@ -219,7 +220,7 @@ public class MapGen : MonoBehaviour
                 }
 
                 //Debug.Log(deriv);
-                if (deriv < der && deriv > 0)
+                if (deriv < min_nurk && deriv > 0)
                 {
                     good.Add(-der_length + i);
                 }
@@ -239,7 +240,7 @@ public class MapGen : MonoBehaviour
                 deriv = 90;
             }
             //Debug.Log(deriv);
-            if (deriv < der && deriv > 0)
+            if (deriv < min_nurk && deriv > 0)
             {
                 good.Add(i);
             }
@@ -271,7 +272,7 @@ public class MapGen : MonoBehaviour
                 }
 
                 //Debug.Log(deriv);
-                if (deriv < der && deriv > 0)
+                if (deriv < min_nurk && deriv > 0)
                 {
                     good.Add(-der_length + i);
                 }
@@ -291,7 +292,7 @@ public class MapGen : MonoBehaviour
                 deriv = 90;
             }
             //Debug.Log(deriv);
-            if (deriv < der && deriv > 0)
+            if (deriv < min_nurk && deriv > 0)
             {
                 good.Add(i);
             }
