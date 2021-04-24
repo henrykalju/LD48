@@ -31,7 +31,9 @@ public class E1_AttackState : AttackState
             colliderScript.killedCount = 0;
             stateMachine.ChangeState(hostile.moveState);
         }
-
+        else{
+            entity.CheckToNotCollideWithWall(new int[]{0},stateData.attackSpeed);
+        }
     }
 
     public override void PhysicsUpdate()
@@ -40,8 +42,13 @@ public class E1_AttackState : AttackState
 
     }
     private void Dash(){
-        float angle = entity.GetAngleFromDir(entity.GetVector3DirToFish(entity.getNearestFish()));
+        GameObject fish = entity.getNearestFish();
+        if (!fish){
+            return;
+        }
+        float angle = entity.GetAngleFromDir(entity.GetVector3DirToFish(fish));
         entity.rb.rotation = angle;
+        //entity.rb.AddForce(entity.GetVector3DirToFish(fish));
         entity.SetVelocity(angle, stateData.attackSpeed);
     }
 }

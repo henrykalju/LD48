@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e35f08884c913440865fb4213c54d2f, type: 3}
   m_Name: SharkDetectPlayerData
   m_EditorClassIdentifier: 
-  standByTime: 1
+  standByTime: 0.5
