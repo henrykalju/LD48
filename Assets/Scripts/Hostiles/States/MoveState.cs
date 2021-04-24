@@ -8,6 +8,7 @@ public class MoveState : State
 
     // 0 - no 1 - front 2 - right 3 - left
     protected int isDetectingWall;
+    protected bool isPlayerInRange;
 
     public MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName)
     {
@@ -18,6 +19,7 @@ public class MoveState : State
     {
         base.Enter();
         entity.SetVelocity();
+        isPlayerInRange = entity.CheckPlayerInRange();
     }
 
     public override void Exit()
@@ -33,5 +35,6 @@ public class MoveState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        isPlayerInRange = entity.CheckPlayerInRange();
     }
 }

@@ -27,10 +27,6 @@ public class IdleState : State
     {
         base.Exit();
 
-        if (rotateAfterIdle != 0)
-        {
-            rotateAfterIdle = 0;
-        }
     }
 
     public override void LogicUpdate()
@@ -46,11 +42,6 @@ public class IdleState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-    }
-
-    public void SetRotateAfterIdle(int rotate)
-    {
-        rotateAfterIdle = rotate;
     }
 
     private void SetRandomIdleTime()

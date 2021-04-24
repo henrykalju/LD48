@@ -19,12 +19,9 @@ public class Entity : MonoBehaviour
     public Animator anim { get; private set; }
     public GameObject aliveGO { get; private set; }
 
-    private Quaternion from;
-    private Quaternion to;
-    private float timeCount = 0.0f;
-    private bool rotating = false;
 
     [SerializeField] Transform wallCheck;
+    [SerializeField] Transform playerCheck;
 
     private Vector2 velocityWorkspace;
 
@@ -32,10 +29,9 @@ public class Entity : MonoBehaviour
     {
         noiseX = 0;
         angle = 0;
-        rotating = false;
         distances = new float[sensorCount];
         speed = entityData.movementSpeed;
-        radiuses = new float[] { 0.75f * speed, 1.25f * speed};
+        radiuses = new float[] { 0.75f * speed, 1.25f * speed };
         Debug.Log(radiuses[0]);
         aliveGO = transform.Find("Alive").gameObject;
         rb = aliveGO.GetComponent<Rigidbody2D>();
@@ -89,7 +85,7 @@ public class Entity : MonoBehaviour
     {
         if (checkFailed == -1)
         {
-            float addangle = (Mathf.PerlinNoise(noiseX*0.01f,0.0f)-0.5f)*1.5f;
+            float addangle = (Mathf.PerlinNoise(noiseX * 0.01f, 0.0f) - 0.5f) * 1.5f;
             noiseX++;
             angle = (angle + addangle) % 360;
             rb.rotation = angle;
@@ -135,7 +131,8 @@ public class Entity : MonoBehaviour
         {
             return -10;
         }
-        else if(rightSide/(distances.Length/2)<radiuses[0]){
+        else if (rightSide / (distances.Length / 2) < radiuses[0])
+        {
             return 10;
         }
         if (leftSide > rightSide)
@@ -147,12 +144,10 @@ public class Entity : MonoBehaviour
             return -4;
         }
     }
-    // public void OnDrawGizmos()
-    // {
-    //     for (int i = 0; i < sensorCount; i++)
-    //     {
-    //         var radAngle = (angle + (i * 360 / sensorCount)) * Mathf.Deg2Rad;
-    //         Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)) * entityData.wallCheckDistance * speed));
-    //     }
-    // }
+
+    public virtual bool CheckPlayerInRange()
+    {
+        Debug.Log(Physics2D.Raycast(playerCheck.position, GameObject.FindGameObjectWithTag("Fish").transform.position, entityData.playerDetectRange, entityData.whatIsPlayer).distance);
+        return Physics2D.Raycast(playerCheck.position, GameObject.FindGameObjectWithTag("Fish").transform.position, entityData.playerDetectRange, entityData.whatIsPlayer);
+    }
 }
