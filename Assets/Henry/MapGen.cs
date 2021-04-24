@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MapGen : MonoBehaviour
 {
@@ -11,6 +14,11 @@ public class MapGen : MonoBehaviour
     
     [SerializeField] private GameObject cube;
     [SerializeField] private GameObject line;
+    [SerializeField] private bool random;
+    [SerializeField] private float laius;
+    [SerializeField] private float ulatuvus;
+
+    [SerializeField] private GameObject endofsection;
 
     private GameObject[] lines_l;
     private GameObject[] lines_r;
@@ -22,17 +30,33 @@ public class MapGen : MonoBehaviour
     private float[] noise;
     private float[] w;
     private int offset;
+    private float noise_seed;
 
     [SerializeField] private int der_length;
     [SerializeField] private float der;
     
+    //NONO
+    private Vector3[] punktid_l;
+    private Vector3[] punktid_r;
+    
+    
     void Start()
     {
+        if (random)
+        {
+            noise_seed = Random.Range(0f, 1f);
+        }
+        else
+        {
+            noise_seed = 0;
+        }
+        
         lines_l = new GameObject[depth];
         lines_r = new GameObject[depth];
         line_r_l = new LineRenderer[depth];
         line_r_r = new LineRenderer[depth];
-        
+
+        endofsection = Instantiate(endofsection);
         
         offset = 0;
 
@@ -42,8 +66,12 @@ public class MapGen : MonoBehaviour
         }
     }
 
-    void UpdateMap()
+    public void UpdateMap()
     {
+        Destroy(lines_l[0]);
+        Destroy(lines_r[0]);
+        Destroy(line_r_l[0]);
+        Destroy(line_r_r[0]);
         for (int i = 0; i < depth-1; i++)
         {
             lines_l[i] = lines_l[i + 1];
@@ -51,6 +79,12 @@ public class MapGen : MonoBehaviour
             lines_r[i] = lines_r[i + 1];
             line_r_r[i] = line_r_r[i + 1];
         }
+        
+        if (lines_l[depth-2] != null)
+        {
+            endofsection.transform.position = new Vector3(0, -offset);
+        }
+
         lines_l[depth-1] = Instantiate(line);
         line_r_l[depth-1] = lines_l[depth-1].GetComponent<LineRenderer>();
         line_r_l[depth-1].positionCount = l;
@@ -58,27 +92,63 @@ public class MapGen : MonoBehaviour
         line_r_r[depth-1] = lines_r[depth-1].GetComponent<LineRenderer>();
         line_r_r[depth-1].positionCount = l;
 
-
         noise = new float[l];
         w = new float[l];
 
+        punktid_l = new Vector3[l];
+        punktid_r = new Vector3[l];
+        
         for (int i = 0; i < l; i++)
         {
-            noise[i] = 50 * (Mathf.PerlinNoise(1, (offset) * 0.07f) - 0.5f);
+            noise[i] = ulatuvus * (Mathf.PerlinNoise(noise_seed, (offset) * 0.07f) - 0.5f);
             //noise[i] = -offset;
-            w[i] = 30 * Mathf.PerlinNoise(1.5f, (offset) * 0.07f) + 3f;
+            w[i] = laius * Mathf.PerlinNoise(noise_seed, (offset) * 0.07f) + 3f;
             //w[i] = offset;
             //Debug.Log(noise[i]);
             
-            line_r_l[depth-1].SetPosition(i, new Vector3(noise[i] - w[i], -offset));
-            line_r_r[depth-1].SetPosition(i, new Vector3(noise[i] + w[i], -offset));
+            
+            //NONO
+            punktid_l[i] = new Vector3(noise[i] - w[i], -offset);
+            punktid_r[i] = new Vector3(noise[i] + w[i], -offset);
+            
+            
+            
+            //line_r_l[depth-1].SetPosition(i, new Vector3(noise[i] - w[i], -offset));
+            //line_r_r[depth-1].SetPosition(i, new Vector3(noise[i] + w[i], -offset));
+            
+            
+            
             //Instantiate(cube, new Vector3(noise[i]-w[i], -i), Quaternion.Euler(Vector3.zero), gameObject.transform);
             //Instantiate(cube, new Vector3(noise[i]+w[i], -i), Quaternion.Euler(Vector3.zero), gameObject.transform);
             offset += 1;
         }
+        //NONO
+        line_r_l[depth-1].SetPositions(punktid_l);
+        line_r_r[depth-1].SetPositions(punktid_r);
 
         offset -= 1;
+
+        //collider also NONO
+        EdgeCollider2D ec_l = lines_l[depth-1].AddComponent<EdgeCollider2D>();
+        EdgeCollider2D ec_r = lines_r[depth-1].AddComponent<EdgeCollider2D>();
+        ec_l.points = punktid_l.Select(i => { return new Vector2(i.x, i.y);}).ToArray();
+        ec_r.points = punktid_r.Select(i => { return new Vector2(i.x, i.y);}).ToArray();
         
+
+        /*
+        MeshCollider mc_l = lines_l[depth - 1].AddComponent<MeshCollider>();
+        MeshCollider mc_r = lines_r[depth - 1].AddComponent<MeshCollider>();
+        Mesh mesh_l = new Mesh();
+        Mesh mesh_r = new Mesh();
+        line_r_l[depth - 1].BakeMesh(mesh_l, true);
+        line_r_r[depth - 1].BakeMesh(mesh_r, true);
+        mc_l.sharedMesh = mesh_l;
+        mc_r.sharedMesh = mesh_r;
+        */
+        
+
+
+
         ArrayList goodPlacesOnTheLeft = GETGoodPlacesOnTheLeft();
         if (goodPlacesOnTheLeft.Count > 0)
         {
@@ -97,8 +167,7 @@ public class MapGen : MonoBehaviour
                 {
                     koht = line_r_l[depth - 2].GetPosition(l + placing);
                 }
-                Instantiate(cube, koht,
-                    quaternion.Euler(Vector3.zero));
+                //Instantiate(cube, koht, quaternion.Euler(Vector3.zero));
             }
         }
 
@@ -120,8 +189,7 @@ public class MapGen : MonoBehaviour
                 {
                     koht = line_r_r[depth - 2].GetPosition(l + placing);
                 }
-                Instantiate(cube, koht,
-                    quaternion.Euler(Vector3.zero));
+                //Instantiate(cube, koht, quaternion.Euler(Vector3.zero));
             }
         }
 
@@ -231,4 +299,11 @@ public class MapGen : MonoBehaviour
         return good;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "EndOfSection")
+        {
+            UpdateMap();
+        }
+    }
 }
