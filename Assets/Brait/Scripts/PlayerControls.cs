@@ -27,9 +27,8 @@ public class PlayerControls : MonoBehaviour
         Vector3 selfPos = transform.position;
 
         float dist = Vector3.Distance(toPos, selfPos);
-        float toMove = 1 / dist * speed;
 
-        Vector3 newPos = Vector3.Lerp(selfPos, toPos, toMove);
+        Vector3 newPos = Vector3.Lerp(selfPos, toPos, speed * Time.deltaTime);
 
         transform.position = newPos;
     }
@@ -37,7 +36,6 @@ public class PlayerControls : MonoBehaviour
     private Vector3 GetMouseInWorld()
     {
         Vector2 mousePos = controls.actions["MouseLocation"].ReadValue<Vector2>();
-        Debug.Log(mousePos);
         Vector3 mousePos3 = new Vector3(mousePos.x, mousePos.y, 10);
 
         return(Camera.main.ScreenToWorldPoint(mousePos3));

@@ -67,7 +67,6 @@ public class FishScript : MonoBehaviour
 
             if (distToLast > minDist)
             {
-                Debug.Log(distToLast);
                 Vector3 forceToAdd = (lastKnownLocation - transform.position).normalized * wanderingSpeed;
                 rbody.AddForce(new Vector3(forceToAdd.x + randomness.x, forceToAdd.y + randomness.y, 0));
 
