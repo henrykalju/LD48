@@ -34,7 +34,7 @@ public class MapGen : MonoBehaviour
     private float noise_seed;
 
     [SerializeField] private int der_length;
-    [FormerlySerializedAs("der")] [SerializeField] private float min_nurk;
+    [FormerlySerializedAs("min_nurk")] [FormerlySerializedAs("der")] [SerializeField] private float max_nurk;
     
     //NONO
     private Vector3[] punktid_l;
@@ -44,6 +44,8 @@ public class MapGen : MonoBehaviour
     //[SerializeField] private GameObject right_mesh;
     
     [SerializeField] private GameObject[] props;
+    [SerializeField] private GameObject[] kalad;
+    [SerializeField] private GameObject[] extras;
     [SerializeField] private GameObject seaweed;
     
     void Start()
@@ -148,11 +150,11 @@ public class MapGen : MonoBehaviour
         left_mesh_prefab.GetComponent<MeshFilter>().mesh = mesh_l;
         right_mesh_prefab.GetComponent<MeshFilter>().mesh = mesh_r;
 
-        createMesh(mesh_l, punktid_l, true);
-        createMesh(mesh_r, punktid_r, false);
+        createMesh(mesh_l, punktid_l, true, offset);
+        createMesh(mesh_r, punktid_r, false, offset);
         
 
-        ArrayList goodPlacesOnTheLeft = GETGoodPlacesOnTheLeft();
+        ArrayList goodPlacesOnTheLeft = GETGoodPlacesOnTheLeft(max_nurk);
         if (goodPlacesOnTheLeft.Count > 0)
         {
             //print(goodPlaces.Count);
@@ -180,7 +182,7 @@ public class MapGen : MonoBehaviour
             }
         }
 
-        ArrayList goodPlacesOnTheRight = GETGoodPlacesOnTheRight();
+        ArrayList goodPlacesOnTheRight = GETGoodPlacesOnTheRight(max_nurk);
         if (goodPlacesOnTheRight.Count > 0)
         {
             //print(goodPlaces.Count);
@@ -206,7 +208,7 @@ public class MapGen : MonoBehaviour
 
     }
 
-    ArrayList GETGoodPlacesOnTheLeft()
+    ArrayList GETGoodPlacesOnTheLeft(float max, float min = 0)
     {
         ArrayList good = new ArrayList();
         
@@ -230,7 +232,7 @@ public class MapGen : MonoBehaviour
                 }
 
                 //Debug.Log(deriv);
-                if (deriv < min_nurk && deriv > 0)
+                if (deriv < max && deriv > min)
                 {
                     good.Add(new float[]{-der_length + i, deriv});
                 }
@@ -250,7 +252,7 @@ public class MapGen : MonoBehaviour
                 deriv = 90;
             }
             //Debug.Log(deriv);
-            if (deriv < min_nurk && deriv > 0)
+            if (deriv < max && deriv > min)
             {
                 good.Add(new float[]{i, deriv});
             }
@@ -258,7 +260,7 @@ public class MapGen : MonoBehaviour
         return good;
     }
     
-    ArrayList GETGoodPlacesOnTheRight()
+    ArrayList GETGoodPlacesOnTheRight(float max, float min = 0)
     {
         ArrayList good = new ArrayList();
         
@@ -282,7 +284,7 @@ public class MapGen : MonoBehaviour
                 }
 
                 //Debug.Log(deriv);
-                if (deriv < min_nurk && deriv > 0)
+                if (deriv < max && deriv > min)
                 {
                     good.Add(new float[] {-der_length + i, deriv});
                 }
@@ -302,7 +304,7 @@ public class MapGen : MonoBehaviour
                 deriv = 90;
             }
             //Debug.Log(deriv);
-            if (deriv < min_nurk && deriv > 0)
+            if (deriv < max && deriv > min)
             {
                 good.Add(new float[]{i, deriv});
             }
@@ -310,7 +312,7 @@ public class MapGen : MonoBehaviour
         return good;
     }
 
-    void createMesh(Mesh mesh, Vector3[] line_points, bool left)
+    void createMesh(Mesh mesh, Vector3[] line_points, bool left, int offset)
     {
         Vector3[] points = new Vector3[line_points.Length*2];
         for (int i = 0; i < line_points.Length; i++)
@@ -358,6 +360,24 @@ public class MapGen : MonoBehaviour
         mesh.vertices = points;
         mesh.triangles = tri;
 
+        mesh.uv = points.Select(i => { return new Vector2(i.x/(left ? -7000 : 7000), (i.y-offset)/-7000); }).ToArray();
+/*
+        Vector2[] a = new Vector2[points.Length];
+        for (int i = 0; i < points.Length; i+=2)
+        {
+            a[i] = points[i-i/2];
+            a[i + 1] = points[points.Length / 2 + i - i / 2];
+        }
+
+        mesh.uv = a;
+
+        /*mesh.uv = new Vector2[]
+        {
+            new Vector2(0, 0),
+            new Vector2(0, 1),
+            new Vector2(1, 1),
+            new Vector2(1, 0)
+        };*/
     }
     
 }
