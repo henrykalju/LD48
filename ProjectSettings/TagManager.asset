@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SchoolMiddle
   - School
+  - Fish
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Fish
+  - Fish4
   - 
   - 
   - 
