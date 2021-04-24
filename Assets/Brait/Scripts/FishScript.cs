@@ -14,7 +14,9 @@ public class FishScript : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rbody;
     [SerializeField] private GameObject school;
+#pragma warning disable CS0108
     [SerializeField] private SpriteRenderer renderer;
+#pragma warning restore CS0108
 
     [SerializeField] private Sprite fish1;
     [SerializeField] private Sprite fish2;
@@ -67,7 +69,6 @@ public class FishScript : MonoBehaviour
 
             if (distToLast > minDist)
             {
-                Debug.Log(distToLast);
                 Vector3 forceToAdd = (lastKnownLocation - transform.position).normalized * wanderingSpeed;
                 rbody.AddForce(new Vector3(forceToAdd.x + randomness.x, forceToAdd.y + randomness.y, 0));
 
@@ -79,12 +80,7 @@ public class FishScript : MonoBehaviour
             }
         }
 
-        else if (distToSchool < minDist)
-        {
-            Debug.Log("Too close");
-        }
-
-        else
+        else if (distToSchool > minDist)
         {
             lastKnownLocation = new Vector3(0, 0, 10);
 

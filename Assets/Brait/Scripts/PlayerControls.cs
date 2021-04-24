@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerControls : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float maxSpeed;
 
     [SerializeField] private PlayerInput controls;
 
@@ -25,11 +26,11 @@ public class PlayerControls : MonoBehaviour
     private void MoveTowards(Vector3 toPos)
     {
         Vector3 selfPos = transform.position;
+        Vector3 direction = toPos - selfPos;
 
-        float dist = Vector3.Distance(toPos, selfPos);
-        float toMove = 1 / dist * speed;
-
-        Vector3 newPos = Vector3.Lerp(selfPos, toPos, toMove);
+        Vector3 directionNormalized = direction.normalized * maxSpeed;
+        
+        Vector3 newPos = Vector3.Lerp(selfPos, selfPos + directionNormalized, speed * Time.deltaTime);
 
         transform.position = newPos;
     }
@@ -37,7 +38,6 @@ public class PlayerControls : MonoBehaviour
     private Vector3 GetMouseInWorld()
     {
         Vector2 mousePos = controls.actions["MouseLocation"].ReadValue<Vector2>();
-        Debug.Log(mousePos);
         Vector3 mousePos3 = new Vector3(mousePos.x, mousePos.y, 10);
 
         return(Camera.main.ScreenToWorldPoint(mousePos3));

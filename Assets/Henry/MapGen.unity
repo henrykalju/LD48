@@ -156,6 +156,8 @@ MonoBehaviour:
   line: {fileID: 4660058553290821591, guid: 476f592b13d376a4cb8d4e48d1d16efb, type: 3}
   l: 31
   depth: 3
+  der_length: 2
+  der: 60
 --- !u!4 &1197395522
 Transform:
   m_ObjectHideFlags: 0
