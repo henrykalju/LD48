@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.4
+  maxSpeed: 5
   controls: {fileID: 290388476}
   fishPrefab: {fileID: 3123612140807396919, guid: 61303251a5e37844dab923c561b3cdd6, type: 3}
 --- !u!114 &290388476
@@ -603,9 +604,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   schoolMiddle: {fileID: 290388472}
-  distance: 0.5
-  speed: 0.7
-  controls: {fileID: 0}
+  maxSpeed: 0.5
+  speed: 5
+  minSpeed: 0.4
+  standingSpeed: 0.3
+  controls: {fileID: 290388476}
 --- !u!1 &872740334
 GameObject:
   m_ObjectHideFlags: 0

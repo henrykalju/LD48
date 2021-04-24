@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerControls : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float maxSpeed;
 
     [SerializeField] private PlayerInput controls;
 
@@ -25,10 +26,11 @@ public class PlayerControls : MonoBehaviour
     private void MoveTowards(Vector3 toPos)
     {
         Vector3 selfPos = transform.position;
+        Vector3 direction = toPos - selfPos;
 
-        float dist = Vector3.Distance(toPos, selfPos);
-
-        Vector3 newPos = Vector3.Lerp(selfPos, toPos, speed * Time.deltaTime);
+        Vector3 directionNormalized = direction.normalized * maxSpeed;
+        
+        Vector3 newPos = Vector3.Lerp(selfPos, selfPos + directionNormalized, speed * Time.deltaTime);
 
         transform.position = newPos;
     }

@@ -78,12 +78,7 @@ public class FishScript : MonoBehaviour
             }
         }
 
-        else if (distToSchool < minDist)
-        {
-            Debug.Log("Too close");
-        }
-
-        else
+        else if (distToSchool > minDist)
         {
             lastKnownLocation = new Vector3(0, 0, 10);
 
