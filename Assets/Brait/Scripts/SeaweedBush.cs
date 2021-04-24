@@ -10,6 +10,14 @@ public class SeaweedBush : MonoBehaviour
     [SerializeField] float maxRotation;
     [SerializeField] GameObject prefabLeaf;
 
+    private Vector3 posToGo;
+    private Quaternion rotToGo;
+
+    public void setPos(Vector3 pos, Quaternion rot)
+    {
+        posToGo = pos;
+        rotToGo = rot;
+    }
 
     private void Start()
     {
@@ -17,6 +25,8 @@ public class SeaweedBush : MonoBehaviour
         {
             SpawnLeaf();
         }
+        transform.parent.position = posToGo;
+        transform.parent.rotation = rotToGo;
     }
 
     private void SpawnLeaf()

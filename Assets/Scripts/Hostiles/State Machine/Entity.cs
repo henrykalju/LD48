@@ -15,6 +15,8 @@ public class Entity : MonoBehaviour
     private float[] radiuses;
     private int noiseX;
 
+    public bool isAttacking { get; set; }
+
     public Rigidbody2D rb { get; private set; }
     public Animator anim { get; private set; }
     public GameObject aliveGO { get; private set; }
@@ -32,7 +34,6 @@ public class Entity : MonoBehaviour
         distances = new float[sensorCount];
         speed = entityData.movementSpeed;
         radiuses = new float[] { 0.75f * speed, 1.25f * speed };
-        Debug.Log(radiuses[0]);
         aliveGO = transform.Find("Alive").gameObject;
         rb = aliveGO.GetComponent<Rigidbody2D>();
         anim = aliveGO.GetComponent<Animator>();
@@ -47,20 +48,29 @@ public class Entity : MonoBehaviour
     public virtual void FixedUpdate()
     {
         stateMachine.currentState.PhysicsUpdate();
-        for (int i = 0; i < sensorCount; i++)
-        {
-            var radAngle = (angle + (i * 360 / sensorCount)) * Mathf.Deg2Rad;
-            distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround).distance;
-            if (distances[i] == 0)
+        if (!isAttacking) {
+            for (int i = 0; i < sensorCount; i++)
             {
-                distances[i] = entityData.wallCheckDistance * speed;
+                var radAngle = (angle + (i * 360 / sensorCount)) * Mathf.Deg2Rad;
+                distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround).distance;
+                if (distances[i] == 0)
+                {
+                    distances[i] = entityData.wallCheckDistance * speed;
+                }
             }
+            speed = entityData.movementSpeed;
+            DoMove(CheckRadiuses());
         }
-        DoMove(CheckRadiuses());
 
     }
 
     public virtual void SetVelocity()
+    {
+        float radAngle = angle * Mathf.Deg2Rad;
+        velocityWorkspace.Set(Mathf.Cos(radAngle) * speed, Mathf.Sin(radAngle) * speed);
+        rb.velocity = velocityWorkspace;
+    }
+    public virtual void SetVelocity(float angle, float speed)
     {
         float radAngle = angle * Mathf.Deg2Rad;
         velocityWorkspace.Set(Mathf.Cos(radAngle) * speed, Mathf.Sin(radAngle) * speed);
@@ -91,11 +101,9 @@ public class Entity : MonoBehaviour
             rb.rotation = angle;
 
             SetVelocity();
-            aliveGO.GetComponent<SpriteRenderer>().color = Color.blue;
         }
         if (checkFailed == 0)
         {
-            aliveGO.GetComponent<SpriteRenderer>().color = Color.green;
             float addangle = FindTurnSide();
             angle = (angle + addangle) % 360;
             rb.rotation = angle;
@@ -104,7 +112,6 @@ public class Entity : MonoBehaviour
         }
         if (checkFailed == 1)
         {
-            aliveGO.GetComponent<SpriteRenderer>().color = Color.red;
             float addangle = FindTurnSide() * 0.2f;
             angle = (angle + addangle) % 360;
             rb.rotation = angle;
@@ -147,7 +154,61 @@ public class Entity : MonoBehaviour
 
     public virtual bool CheckPlayerInRange()
     {
-        Debug.Log(Physics2D.Raycast(playerCheck.position, GameObject.FindGameObjectWithTag("Fish").transform.position, entityData.playerDetectRange, entityData.whatIsPlayer).distance);
-        return Physics2D.Raycast(playerCheck.position, GameObject.FindGameObjectWithTag("Fish").transform.position, entityData.playerDetectRange, entityData.whatIsPlayer);
+        if (!GameObject.FindGameObjectWithTag("Fish"))
+        {
+            return false;
+        }
+        GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
+        for (int i = 0; i < fishies.Length; i++)
+        {
+            Vector3 dir = fishies[i].transform.position - playerCheck.position;
+            if (Physics2D.Raycast(playerCheck.position, dir, entityData.playerDetectRange, entityData.whatIsPlayer))
+            {
+                return true;
+            }
+        }
+        return false;
     }
+
+    public virtual GameObject getNearestFish()
+    {
+        if (!GameObject.FindGameObjectWithTag("Fish"))
+        {
+            return null;
+        }
+        GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
+        GameObject nearestFish = null;
+        float nearestFishDistance = entityData.playerDetectRange;
+        for (int i = 0; i < fishies.Length; i++)
+        {
+
+            Vector3 dir = fishies[i].transform.position - playerCheck.position;
+            float fishDistance = Physics2D.Raycast(playerCheck.position, dir, entityData.playerDetectRange, entityData.whatIsPlayer).distance;
+
+            if (fishDistance < nearestFishDistance && fishDistance != 0)
+            {
+                nearestFish = fishies[i];
+                nearestFishDistance = fishDistance;
+            }
+        }
+        return nearestFish;
+    }
+
+    public virtual void CheckIfIsAttacking()
+    {
+        GameObject fish = getNearestFish();
+        if (!fish) {
+            isAttacking = false;
+            return;
+        }
+        isAttacking = true;
+    }
+    public virtual Vector3 GetVector3DirToFish(GameObject fish){
+        Vector3 dir = fish.transform.position - aliveGO.transform.position;
+        return dir;
+    }
+    public virtual float GetAngleFromDir(Vector3 dir){
+        angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        return angle;
+    } 
 }

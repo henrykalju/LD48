@@ -161,7 +161,10 @@ MonoBehaviour:
   l: 31
   depth: 5
   der_length: 2
-  der: 60
+  min_nurk: 60
+  mesh_prefab: {fileID: 5465865961820498062, guid: ee21d06809a195543ac6e41656102145, type: 3}
+  props: []
+  seaweed: {fileID: 2141709038404300754, guid: 59380a25ec6beb94da3fdc5d223ddca0, type: 3}
 --- !u!4 &1197395522
 Transform:
   m_ObjectHideFlags: 0
@@ -193,15 +196,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8821759105160428632, guid: bae56f6cc131d8c4f8363f1639395cb0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -299.1143
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8821759105160428632, guid: bae56f6cc131d8c4f8363f1639395cb0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -265.76996
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8821759105160428632, guid: bae56f6cc131d8c4f8363f1639395cb0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.981373
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8821759105160428632, guid: bae56f6cc131d8c4f8363f1639395cb0, type: 3}
       propertyPath: m_LocalRotation.w

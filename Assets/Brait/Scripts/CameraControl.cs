@@ -26,18 +26,6 @@ public class CameraControl : MonoBehaviour
         screenMidVertical = (int)(height / 2);
     }
 
-    /*public void FixedUpdate()
-    {
-        Vector3 selfPos = new Vector3(transform.position.x, transform.position.y, 0);
-        float dist = Vector3.Distance(selfPos, schoolMiddle.transform.position);
-
-        if (dist > distance)
-        {
-            Vector3 newPos = Vector3.Lerp(selfPos, schoolMiddle.transform.position, speed * Time.deltaTime);
-            transform.position = new Vector3(newPos.x, newPos.y, -10);
-        }
-    }*/
-
     private void FixedUpdate()
     {
         Vector2 mousePos = controls.actions["MouseLocation"].ReadValue<Vector2>();
@@ -49,15 +37,6 @@ public class CameraControl : MonoBehaviour
         if (vectDist > maxSpeed)
         {
             mouseToWorld = mouseToWorld.normalized * maxSpeed;
-        }
-        if (vectDist < standingSpeed)
-        {
-            return;
-        }
-
-        if (vectDist < minSpeed)
-        {
-            mouseToWorld = mouseToWorld.normalized * minSpeed;
         }
 
         Vector3 selfPos = new Vector3(transform.position.x + (mouseToWorld.x*Time.deltaTime*speed), transform.position.y + (mouseToWorld.y*Time.deltaTime*speed), -10);
