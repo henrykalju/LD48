@@ -39,6 +39,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2984318939410847499}
     m_Modifications:
+    - target: {fileID: 3412848039757239381, guid: 18babf163281e0e45b8299e19ce09ee2, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3412848039757239381, guid: 18babf163281e0e45b8299e19ce09ee2, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 788153623
+      objectReference: {fileID: 0}
     - target: {fileID: 4079384261001883781, guid: 18babf163281e0e45b8299e19ce09ee2, type: 3}
       propertyPath: m_Name
       value: ShipBack
@@ -86,6 +94,14 @@ PrefabInstance:
     - target: {fileID: 5615864431195848927, guid: 18babf163281e0e45b8299e19ce09ee2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257391164008853710, guid: 18babf163281e0e45b8299e19ce09ee2, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8257391164008853710, guid: 18babf163281e0e45b8299e19ce09ee2, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -249094197
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18babf163281e0e45b8299e19ce09ee2, type: 3}
