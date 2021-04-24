@@ -1,0 +1,71 @@
+{
+    "name": "PlayerActions",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "f2602df8-aea5-4b01-948a-360dccb192a9",
+            "actions": [
+                {
+                    "name": "MouseLocation",
+                    "type": "Value",
+                    "id": "69d9148b-84eb-4cba-9aff-0527a1ef09d8",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "AddFish",
+                    "type": "Button",
+                    "id": "8ac10714-365e-4cbc-bde8-5686ad5b3390",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RemoveFish",
+                    "type": "Button",
+                    "id": "02312714-93e2-46fe-a233-8900c20d8530",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1464c98e-98b8-476a-9555-66ba9d3a1dae",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseLocation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1168495-c4d4-4428-9296-8521834b2e2f",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AddFish",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2937142-b474-4b73-a7ae-4d190fa2578b",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RemoveFish",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
