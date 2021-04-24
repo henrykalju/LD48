@@ -14,7 +14,9 @@ public class FishScript : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rbody;
     [SerializeField] private GameObject school;
+#pragma warning disable CS0108
     [SerializeField] private SpriteRenderer renderer;
+#pragma warning restore CS0108
 
     [SerializeField] private Sprite fish1;
     [SerializeField] private Sprite fish2;
