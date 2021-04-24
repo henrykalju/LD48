@@ -24,8 +24,7 @@ public class E1_MoveState : MoveState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (isPlayerInRange) {
-            Debug.Log("WOAH");
+        if (isPlayerInRange && !isTired) {
             stateMachine.ChangeState(hostile.detectPlayerState);
         }
     }

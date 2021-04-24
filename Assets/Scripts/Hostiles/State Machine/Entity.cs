@@ -15,6 +15,8 @@ public class Entity : MonoBehaviour
     private float[] radiuses;
     private int noiseX;
 
+    public bool isAttacking { get; set; }
+
     public Rigidbody2D rb { get; private set; }
     public Animator anim { get; private set; }
     public GameObject aliveGO { get; private set; }
@@ -32,7 +34,6 @@ public class Entity : MonoBehaviour
         distances = new float[sensorCount];
         speed = entityData.movementSpeed;
         radiuses = new float[] { 0.75f * speed, 1.25f * speed };
-        Debug.Log(radiuses[0]);
         aliveGO = transform.Find("Alive").gameObject;
         rb = aliveGO.GetComponent<Rigidbody2D>();
         anim = aliveGO.GetComponent<Animator>();
@@ -47,16 +48,19 @@ public class Entity : MonoBehaviour
     public virtual void FixedUpdate()
     {
         stateMachine.currentState.PhysicsUpdate();
-        for (int i = 0; i < sensorCount; i++)
-        {
-            var radAngle = (angle + (i * 360 / sensorCount)) * Mathf.Deg2Rad;
-            distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround).distance;
-            if (distances[i] == 0)
+        if (!isAttacking) {
+            for (int i = 0; i < sensorCount; i++)
             {
-                distances[i] = entityData.wallCheckDistance * speed;
+                var radAngle = (angle + (i * 360 / sensorCount)) * Mathf.Deg2Rad;
+                distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround).distance;
+                if (distances[i] == 0)
+                {
+                    distances[i] = entityData.wallCheckDistance * speed;
+                }
             }
+            speed = entityData.movementSpeed;
+            DoMove(CheckRadiuses());
         }
-        DoMove(CheckRadiuses());
 
     }
 
@@ -147,7 +151,58 @@ public class Entity : MonoBehaviour
 
     public virtual bool CheckPlayerInRange()
     {
-        Debug.Log(Physics2D.Raycast(playerCheck.position, GameObject.FindGameObjectWithTag("Fish").transform.position, entityData.playerDetectRange, entityData.whatIsPlayer).distance);
-        return Physics2D.Raycast(playerCheck.position, GameObject.FindGameObjectWithTag("Fish").transform.position, entityData.playerDetectRange, entityData.whatIsPlayer);
+        if (!GameObject.FindGameObjectWithTag("Fish"))
+        {
+            return false;
+        }
+        GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
+        for (int i = 0; i < fishies.Length; i++)
+        {
+            Debug.DrawLine(fishies[i].transform.position, playerCheck.position,Color.green);
+            if (Physics2D.Raycast(playerCheck.position, (Vector2)fishies[i].transform.position, entityData.playerDetectRange*10, entityData.whatIsPlayer))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public virtual GameObject getNearestFish()
+    {
+        if (!GameObject.FindGameObjectWithTag("Fish"))
+        {
+            return null;
+        }
+        GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
+        GameObject nearestFish = null;
+        float nearestFishDistance = entityData.playerDetectRange*10;
+        for (int i = 0; i < fishies.Length; i++)
+        {
+            Debug.DrawLine(fishies[i].transform.position, playerCheck.position,Color.yellow);
+            float fishDistance = Physics2D.Raycast(playerCheck.position,(Vector2) fishies[i].transform.position, entityData.playerDetectRange*10, entityData.whatIsPlayer).distance;
+            if (fishDistance < nearestFishDistance && fishDistance != 0)
+            {
+                Debug.Log(fishDistance);
+                nearestFish = fishies[i];
+                nearestFishDistance = fishDistance;
+            }
+        }
+        return nearestFish;
+    }
+
+    public virtual void GoToFish()
+    {
+        GameObject fish = getNearestFish();
+        if (!fish) {
+            isAttacking = false;
+            return;
+        }
+        isAttacking = true;
+        Vector3 dir = fish.transform.position - aliveGO.transform.position;
+        angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        rb.rotation = angle;
+        speed = entityData.attackSpeed;
+        SetVelocity();
+        
     }
 }
