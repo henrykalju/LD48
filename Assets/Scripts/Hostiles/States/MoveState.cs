@@ -11,6 +11,9 @@ public class MoveState : State
     protected bool isPlayerInRange;
     protected bool isTired;
 
+
+
+
     public MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -20,7 +23,7 @@ public class MoveState : State
     {
         isTired = true;
         base.Enter();
-        entity.SetVelocity();
+        entity.SetVelocity(entity.angle, entity.speed);
         isPlayerInRange = entity.CheckPlayerInRange();
     }
 
@@ -36,6 +39,7 @@ public class MoveState : State
         {
             isTired = false;
         }
+        entity.CheckToNotCollideWithWall(new int[]{0,1,2,3}, entity.speed);
     }
 
     public override void PhysicsUpdate()
