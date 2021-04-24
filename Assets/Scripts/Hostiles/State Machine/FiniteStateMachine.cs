@@ -10,7 +10,6 @@ public class FiniteStateMachine
     {
         currentState = startingState;
         currentState.Enter();
-
     }
 
     public void ChangeState(State newState)
