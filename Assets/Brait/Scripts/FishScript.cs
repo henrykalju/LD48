@@ -14,6 +14,10 @@ public class FishScript : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rbody;
     [SerializeField] private GameObject school;
+    [SerializeField] private SpriteRenderer renderer;
+
+    [SerializeField] private Sprite fish1;
+    [SerializeField] private Sprite fish2;
 
     [SerializeField] private Vector3 lastKnownLocation = new Vector3(0,0,10);
 
@@ -25,6 +29,15 @@ public class FishScript : MonoBehaviour
             gameObject.layer = 6;
         }
 
+        rnd = Random.Range(1, 3);
+        if (rnd == 1)
+        {
+            renderer.sprite = fish1;
+        }
+        else
+        {
+            renderer.sprite = fish2;
+        }
 
         randomness = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
 

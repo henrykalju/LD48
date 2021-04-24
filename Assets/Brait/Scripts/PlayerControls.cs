@@ -11,6 +11,11 @@ public class PlayerControls : MonoBehaviour
 
     [SerializeField] private GameObject fishPrefab;
 
+
+    private void Start()
+    {
+        SpawnFish(100);
+    }
     private void FixedUpdate()
     {
         Vector3 mousePosWorld = GetMouseInWorld();
