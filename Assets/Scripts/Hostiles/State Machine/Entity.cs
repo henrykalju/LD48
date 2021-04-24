@@ -70,6 +70,12 @@ public class Entity : MonoBehaviour
         velocityWorkspace.Set(Mathf.Cos(radAngle) * speed, Mathf.Sin(radAngle) * speed);
         rb.velocity = velocityWorkspace;
     }
+    public virtual void SetVelocity(float angle, float speed)
+    {
+        float radAngle = angle * Mathf.Deg2Rad;
+        velocityWorkspace.Set(Mathf.Cos(radAngle) * speed, Mathf.Sin(radAngle) * speed);
+        rb.velocity = velocityWorkspace;
+    }
     private int CheckRadiuses()
     {
         for (int j = 0; j < radiuses.Length; j++)
@@ -188,7 +194,7 @@ public class Entity : MonoBehaviour
         return nearestFish;
     }
 
-    public virtual void GoToFish()
+    public virtual void CheckIfIsAttacking()
     {
         GameObject fish = getNearestFish();
         if (!fish) {
@@ -196,13 +202,13 @@ public class Entity : MonoBehaviour
             return;
         }
         isAttacking = true;
+    }
+    public virtual Vector3 GetVector3DirToFish(GameObject fish){
         Vector3 dir = fish.transform.position - aliveGO.transform.position;
+        return dir;
+    }
+    public virtual float GetAngleFromDir(Vector3 dir){
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;
-        speed = entityData.attackSpeed;
-        SetVelocity();
-    }
-    public virtual void GetVector3ToFish(){
-        
-    }
+        return angle;
+    } 
 }
