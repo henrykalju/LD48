@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PiranhaBaseData
   m_EditorClassIdentifier: 
   wallCheckDistance: 10
-  movementSpeed: 3
+  movementSpeed: 2.5
   playerDetectRange: 6
   whatIsGround:
     serializedVersion: 2
@@ -21,3 +21,6 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  whatIsShip:
+    serializedVersion: 2
+    m_Bits: 0

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: SharkAttackPlayerData
   m_EditorClassIdentifier: 
   chaseDuration: 5
-  maxKillCount: 10
+  dashDuration: 1
+  maxKillCount: 4
   attackSpeed: 10

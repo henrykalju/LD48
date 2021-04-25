@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseDuration: 5
   dashDuration: 0
-  maxKillCount: 40
-  attackSpeed: 3
+  maxKillCount: 5
+  attackSpeed: 2.5
