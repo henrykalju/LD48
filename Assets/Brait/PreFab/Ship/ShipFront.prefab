@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3697878138918726973}
   - component: {fileID: 4692839335471301851}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ShipFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
