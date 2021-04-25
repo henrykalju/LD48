@@ -29,6 +29,7 @@ public class E2_AttackState : AttackState
         base.LogicUpdate();
         if (isTired)
         {
+            hostile.fishInRange = null;
             colliderScript.killedCount = 0;
             stateMachine.ChangeState(hostile.moveState);
         }
@@ -46,7 +47,7 @@ public class E2_AttackState : AttackState
 
     private void Chase()
     {
-        GameObject fish = entity.getNearestFish();
+        GameObject fish = hostile.fishInRange;
         if (!fish)
         {
             return;
