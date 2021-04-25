@@ -47,6 +47,8 @@ public class MapGen : MonoBehaviour
     [SerializeField] private GameObject[] kalad;
     [SerializeField] private GameObject[] extras;
     [SerializeField] private GameObject seaweed;
+    //see on probability, et mingile sobivale kohale tuleb seaweed
+    [SerializeField] private float seaweed_prob;
     
     void Start()
     {
