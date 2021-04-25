@@ -26,7 +26,7 @@ public class DetectPlayerState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
+        entity.CheckToNotCollideWithWall(new int[] { -1, 0, 1 }, entity.speed);
         if (isReadyToInteract && !entity.CheckPlayerInRange()) {
             timedOut = true;
         }
