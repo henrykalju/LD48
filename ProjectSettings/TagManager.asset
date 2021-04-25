@@ -9,6 +9,9 @@ TagManager:
   - Fish
   - EndOfSection
   - Map
+  - Main
+  - Settings
+  - Credits
   layers:
   - Default
   - TransparentFX
