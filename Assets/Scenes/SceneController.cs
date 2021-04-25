@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
@@ -16,10 +17,12 @@ public class SceneController : MonoBehaviour
         currentPage = pages["Main"];
         pages["Settings"].SetActive(false);
         pages["Credits"].SetActive(false);
+    
 
     }
     public void StartGame()
     {
+        
         SceneManager.LoadScene("GameScene");
     }
 
