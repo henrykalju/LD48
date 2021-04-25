@@ -15,7 +15,7 @@ public class EndOfSectionScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.gameObject.tag != "Fish") return; 
         ((MapGen)map.GetComponent(typeof(MapGen))).UpdateMap();
     }
 }
