@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PiranhaAttackData
   m_EditorClassIdentifier: 
   chaseDuration: 5
-  dashDuration: 1
-  maxKillCount: 10
-  attackSpeed: 6
+  dashDuration: 0
+  maxKillCount: 40
+  attackSpeed: 3
