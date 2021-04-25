@@ -150,7 +150,8 @@ public class Entity : MonoBehaviour
             for (int i = 0; i < fishies.Length; i++)
             {
                 Vector3 dir = fishies[i].transform.position - playerCheck.position;
-                if (Physics2D.CircleCast(playerCheck.position, 0.25f, dir, entityData.playerDetectRange, entityData.whatIsPlayer))
+                RaycastHit2D hit = Physics2D.CircleCast(playerCheck.position, 0.25f, dir, entityData.playerDetectRange, entityData.whatIsPlayer);
+                if (hit && hit.collider.gameObject.layer.Equals("Fish"))
                 {
                     return fishies[i];
                 }
