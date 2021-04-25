@@ -96,7 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 535267072609096370}
   - component: {fileID: 3412848039757239381}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: vasaktaga
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5615864431195848927}
   - component: {fileID: 8070330272856364541}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: ShipBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1123110976674180041}
   - component: {fileID: 8257391164008853710}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: vasak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
