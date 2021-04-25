@@ -44,8 +44,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3677061, y: -0.11751157}
-  m_Size: {x: 4.282765, y: 1.2350345}
+  m_Offset: {x: 0.21778394, y: -0.11751155}
+  m_Size: {x: 3.9829288, y: 1.2350363}
   m_Direction: 1
 --- !u!1 &5800864851214502123
 GameObject:
@@ -200,8 +200,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.307869, y: -0.10315757}
-  m_Size: {x: 4.930746, y: 1.7061911}
+  m_Offset: {x: 0.33035448, y: -0.10315757}
+  m_Size: {x: 4.975729, y: 1.706197}
   m_Direction: 1
 --- !u!114 &5387108251627365471
 MonoBehaviour:
@@ -282,6 +282,7 @@ MonoBehaviour:
   noiseY: 0
   wallCheck: {fileID: 5800864851214502122}
   playerCheck: {fileID: 5800864853093663886}
+  fishInRange: {fileID: 0}
   idleStateData: {fileID: 11400000, guid: 42b0d955e40a1bc4eb2df2717a66dacd, type: 2}
   moveStateData: {fileID: 11400000, guid: a85a08d59339b7549a38e7db536cba4d, type: 2}
   detectPlayerData: {fileID: 11400000, guid: 2aa1e39f8fb8c8f498026b666675666c, type: 2}

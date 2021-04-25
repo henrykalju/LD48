@@ -22,4 +22,8 @@ public class ColliderScript : MonoBehaviour
         } 
 
     }
+
+    void OnDestroy() {
+        Destroy(transform.parent.gameObject);
+    }
 }

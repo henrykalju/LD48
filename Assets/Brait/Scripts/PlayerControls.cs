@@ -15,7 +15,7 @@ public class PlayerControls : MonoBehaviour
 
     private void Start()
     {
-        //SpawnFish(100);
+        SpawnFish(100);
     }
     private void FixedUpdate()
     {
@@ -29,7 +29,7 @@ public class PlayerControls : MonoBehaviour
         Vector3 direction = toPos - selfPos;
 
         Vector3 directionNormalized = direction.normalized * maxSpeed;
-        
+
         Vector3 newPos = Vector3.Lerp(selfPos, selfPos + directionNormalized, speed * Time.deltaTime);
 
         transform.position = newPos;
@@ -40,7 +40,7 @@ public class PlayerControls : MonoBehaviour
         Vector2 mousePos = controls.actions["MouseLocation"].ReadValue<Vector2>();
         Vector3 mousePos3 = new Vector3(mousePos.x, mousePos.y, 10);
 
-        return(Camera.main.ScreenToWorldPoint(mousePos3));
+        return (Camera.main.ScreenToWorldPoint(mousePos3));
     }
 
     public void SpawnFish(int amount)
