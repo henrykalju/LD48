@@ -19,6 +19,7 @@ public class Entity : MonoBehaviour
     public float[] distances;
     public float[] radiuses;
     public int noiseX;
+    public float noiseY;
     [SerializeField] public Transform wallCheck;
     [SerializeField] public Transform playerCheck;
 
@@ -27,6 +28,7 @@ public class Entity : MonoBehaviour
     public virtual void Start()
     {
         noiseX = 0;
+        noiseY = Random.Range(-10f, 10f);
         angle = 0;
         distances = new float[sensorCount];
         speed = entityData.movementSpeed;
@@ -75,7 +77,7 @@ public class Entity : MonoBehaviour
     {
         if (checkFailed == -1)
         {
-            float addangle = (Mathf.PerlinNoise(noiseX * 0.01f, 0.0f) - 0.5f) * 1.5f;
+            float addangle = (Mathf.PerlinNoise(noiseX * 0.01f, noiseY) - 0.5f) * 1.5f;
             noiseX++;
             angle = (angle + addangle) % 360;
             rb.rotation = angle;

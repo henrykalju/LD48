@@ -39,7 +39,7 @@ public class MoveState : State
         {
             isTired = false;
         }
-        entity.CheckToNotCollideWithWall(new int[]{0,1,2,3}, entity.speed);
+        entity.CheckToNotCollideWithWall(new int[] { -1, 0, 1, 2, 3 }, entity.speed);
     }
 
     public override void PhysicsUpdate()
