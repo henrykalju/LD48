@@ -27,7 +27,6 @@ public class UIcontroller : MonoBehaviour
 
     private void Update()
     {
-        print("a");
         d = (int) Math.Max(Math.Floor(-school_middle.transform.position.y), d);
         depth_text.text = d + "m";
     }
