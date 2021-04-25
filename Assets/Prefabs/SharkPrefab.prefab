@@ -190,7 +190,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5800864852545973242}
   - component: {fileID: 6528812283983686405}
-  - component: {fileID: 8188343373505620073}
   m_Layer: 0
   m_Name: SharkPrefab
   m_TagString: Untagged
@@ -239,22 +238,6 @@ MonoBehaviour:
   moveStateData: {fileID: 11400000, guid: a85a08d59339b7549a38e7db536cba4d, type: 2}
   detectPlayerData: {fileID: 11400000, guid: 2aa1e39f8fb8c8f498026b666675666c, type: 2}
   attackData: {fileID: 11400000, guid: 27f33c8e3cc3ee04c9235d9e7ad08c5a, type: 2}
---- !u!70 &8188343373505620073
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5800864852545973241}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.3184245, y: -0.1326738}
-  m_Size: {x: 4.3813176, y: 1.2653602}
-  m_Direction: 1
 --- !u!1 &5800864853093663887
 GameObject:
   m_ObjectHideFlags: 0
