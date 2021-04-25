@@ -26,4 +26,8 @@ public class Oil : MonoBehaviour
             transform.position = new Vector3(0, transform.position.y - (speed * Time.deltaTime), 0);
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(collision.gameObject);
+    }
 }

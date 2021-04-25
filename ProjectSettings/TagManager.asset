@@ -61,3 +61,6 @@ TagManager:
   - name: rocks front
     uniqueID: 1143814417
     locked: 0
+  - name: oil
+    uniqueID: 2452999993
+    locked: 0
