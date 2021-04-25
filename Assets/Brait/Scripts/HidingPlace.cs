@@ -9,6 +9,11 @@ public class HidingPlace : MonoBehaviour
         collision.gameObject.layer = 10;
     }
 
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        collision.gameObject.layer = 10;
+    }
+
     public void OnTriggerExit2D(Collider2D collision)
     {
         collision.gameObject.layer = 6;
