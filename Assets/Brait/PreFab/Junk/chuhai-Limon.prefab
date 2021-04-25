@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2123490742955979484}
   - component: {fileID: 9127170744601109641}
   - component: {fileID: 1456329249017204953}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: chuhai-Limon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

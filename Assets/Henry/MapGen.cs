@@ -71,6 +71,11 @@ public class MapGen : MonoBehaviour
     [SerializeField] private GameObject seaweed;
     //see on probability, et mingile sobivale kohale tuleb seaweed
     [SerializeField] private float seaweed_prob;
+
+    [SerializeField] private float kala_spawn_nurk_1;
+    [SerializeField] private float kala_spawn_nurk_2;
+    [SerializeField] private float kala_prob;
+    [SerializeField] private float extra_prob;
     
     void Start()
     {
@@ -216,14 +221,20 @@ public class MapGen : MonoBehaviour
                     //ehk võtame eelviimase sektsiooni õige indeksiga elemendi ja saame selle koha (siin ei saa -1 ja muid taoliseid kasutada, seega peab kasutama length + indeks, mis on alla 0)
                     koht = line_r_l[depth - 2].GetPosition(l + placing);
                 }
+
+                float rand = Random.value;
                 
                 //kui rnd value on soodne seaweedi kasvamiseks
-                if (Random.value < seaweed_prob)
+                if (rand <= seaweed_prob)
                 {
                     //teeme seaweed
                     GameObject a = Instantiate(seaweed);
                     //ja muudame selle asukohta ja rotationit
                     a.transform.GetChild(0).GetComponent<SeaweedBush>().setPos(koht, Quaternion.Euler(0, 0, -place[1]));
+                }
+                else
+                {
+                    //vrakid
                 }
             }
         }
@@ -269,35 +280,25 @@ public class MapGen : MonoBehaviour
 
         //saame teada head kohad, kus saaks spawnida vastaseid (ehk kohad, kus sein on ~~90 kraadi ehk püstine)
         //kahjuks see funktsioon õigesti ei tööta, te võiks selle korda teha, ma pol kindel kus viga on, sest me kustiga vaatasime selle koos üle ja me ei leidnud viga ples, see peaks õige olema, aga see miskipärast paneb haid seina sisse, idk
-        goodPlacesOnTheLeft = GETGoodPlacesOnTheLeft(90, 75);
+        goodPlacesOnTheLeft = GETGoodPlacesOnTheLeft(kala_spawn_nurk_2, kala_spawn_nurk_1);
         //kui neid on
         if (goodPlacesOnTheLeft.Count > 0)
         {
             //käime kõik läbi
             foreach (float[] place in goodPlacesOnTheLeft)
             {
+                print(place[0]);
+                print(place[1]);
                 //nagu enne
                 int placing = (int) place[0] + (int) Math.Floor(der_length / 2f);
+                float koht = ulatuvus * (Mathf.PerlinNoise(noise_seed, (offset-placing) * 0.07f) - 0.5f);
+
                 //nagu enne
-                float koht;
-                
-                //nagu enne
-                if (placing >= 0)
-                {
-                    //nagu enne
-                    koht = (line_r_l[depth - 1].GetPosition(placing).x + line_r_r[depth - 1].GetPosition(placing).x)/2;
-                }
-                else
-                {
-                    //nagu enne
-                    koht = (line_r_l[depth - 2].GetPosition(l + placing).x + line_r_r[depth - 2].GetPosition(l + placing).x)/2;
-                }
-                //nagu enne
-                //Instantiate(cube, koht, quaternion.Euler(Vector3.zero));
-                
+                //Instantiate(cube, new Vector3(-line_r_l[depth - 1].GetPosition(placing).x, placing-offset), Quaternion.Euler(Vector3.zero));
+                //Instantiate(cube, new Vector3(-line_r_r[depth - 1].GetPosition(placing).x, placing - offset), Quaternion.Euler(Vector3.zero));
                 
                 //teeme 0-2, et oleks 50% võimalus, et tuleb kala
-                float prob = Random.Range(0f, 2f);
+                float prob = Random.Range(0f, 1/kala_prob);
                 //vaatame, milline kala tuleb (küigil sama võimalus tulla)
                 for (int i = 0; i < kalad.Length; i++)
                 {
@@ -308,8 +309,27 @@ public class MapGen : MonoBehaviour
                         GameObject kala = Instantiate(kalad[i]);
                         //ja pane ta õigesse kohta
                         kala.transform.position = new Vector3(koht, -offset+placing, 0);
+                        print(koht);
+                        print(placing+l-offset);
                     }
                 }
+
+                prob = Random.Range(0f, 1f);
+                GameObject extra;
+                
+                if (prob <= extra_prob/2)
+                {
+                    extra = Instantiate(extras[0]);
+                    extra.transform.position = new Vector3(koht, placing-offset, 0);
+
+                }
+                else if(prob <= extra_prob)
+                {
+                    extra = Instantiate(extras[1]);
+                    extra.transform.position = new Vector3(koht, placing-offset, 0);
+
+                }
+                
             }
         }
     }
