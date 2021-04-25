@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,17 +9,27 @@ using UnityEngine.UIElements;
 public class UIcontroller : MonoBehaviour
 {
     [SerializeField] TMP_Text size_text;
-    [SerializeField] private GameObject depth_text;
+    [SerializeField] TMP_Text depth_text;
 
     [SerializeField] private GameObject pause_btn;
     [SerializeField] private GameObject resume_btn;
     [SerializeField] private GameObject restart_btn;
     [SerializeField] private GameObject menu_btn;
 
+    [SerializeField] private GameObject school_middle;
+
+    private int d = 0;
+    
     private void Start()
     {
-        print(pause_btn.GetType());
         GameManager.Instance.onFishChange += ChangeText;
+    }
+
+    private void Update()
+    {
+        print("a");
+        d = (int) Math.Max(Math.Floor(-school_middle.transform.position.y), d);
+        depth_text.text = d + "m";
     }
 
     private void ChangeText()
@@ -67,7 +78,8 @@ public class UIcontroller : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("MapGen");
+        ResumeGame();
+        SceneManager.LoadScene("GameScene");
     }
     
 
