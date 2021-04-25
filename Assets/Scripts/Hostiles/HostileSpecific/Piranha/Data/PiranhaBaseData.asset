@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e642eb72132a454cb9d0c66695e46e1, type: 3}
-  m_Name: newEntityData
+  m_Name: PiranhaBaseData
   m_EditorClassIdentifier: 
   wallCheckDistance: 10
   movementSpeed: 3
   playerDetectRange: 6
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64

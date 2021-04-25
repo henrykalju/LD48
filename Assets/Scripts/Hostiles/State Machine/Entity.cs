@@ -200,7 +200,7 @@ public class Entity : MonoBehaviour
         for (int i = 0; i < sensorCount; i++)
         {
             var radAngle = (angle + (i * 360 / sensorCount)) * Mathf.Deg2Rad;
-            distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround).distance;
+            distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround+entityData.whatIsShip).distance;
             if (distances[i] == 0)
             {
                 distances[i] = entityData.wallCheckDistance * speed;
