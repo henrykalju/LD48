@@ -15,7 +15,8 @@ public class ColliderScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (stateData.maxKillCount>killedCount)
         {
-            if (other.gameObject.tag.Equals("Fish")){
+            if (other.gameObject.layer == 10) return;
+            if (other.gameObject.layer == 6){
                 killedCount++;
                 Destroy(other.gameObject);
             }
