@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 9023750118375911427}
   - component: {fileID: 9023750118375911424}
   - component: {fileID: 9023750118375911428}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Oil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
