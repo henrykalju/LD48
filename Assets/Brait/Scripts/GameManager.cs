@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         get; private set;
     }
 
-    private int numberOfFish;
+    private int numberOfFish = 0;
 
     public int NumberOfFish
     {
