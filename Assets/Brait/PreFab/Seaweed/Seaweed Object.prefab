@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2141709038404300755}
-  - component: {fileID: -1813944057291392509}
   m_Layer: 0
   m_Name: Seaweed Object
   m_TagString: Untagged
@@ -33,22 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &-1813944057291392509
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2141709038404300754}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.01, y: 1.313736}
-  m_Size: {x: 4.51, y: 3.177379}
-  m_Direction: 1
 --- !u!1001 &2141709037560900415
 PrefabInstance:
   m_ObjectHideFlags: 0
