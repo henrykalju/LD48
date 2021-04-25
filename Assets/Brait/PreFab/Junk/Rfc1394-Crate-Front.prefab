@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6133130581062505006}
   - component: {fileID: 2325686101373500791}
   - component: {fileID: 6107535025484872619}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rfc1394-Crate-Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}

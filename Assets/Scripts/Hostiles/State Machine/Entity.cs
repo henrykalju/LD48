@@ -53,6 +53,7 @@ public class Entity : MonoBehaviour
         float radAngle = angle * Mathf.Deg2Rad;
         velocityWorkspace.Set(Mathf.Cos(radAngle) * speed, Mathf.Sin(radAngle) * speed);
         rb.velocity = velocityWorkspace;
+        rb.rotation = angle;
     }
     public int CheckRadiuses(float speed, int[] radiusesToUse)
     {
@@ -80,7 +81,6 @@ public class Entity : MonoBehaviour
             float addangle = (Mathf.PerlinNoise(noiseX * 0.01f, noiseY) - 0.5f) * 1.5f;
             noiseX++;
             angle = (angle + addangle) % 360;
-            rb.rotation = angle;
 
             SetVelocity(angle, speed);
         }
@@ -88,7 +88,6 @@ public class Entity : MonoBehaviour
         {
             float addangle = FindTurnSide();
             angle = (angle + addangle) % 360;
-            rb.rotation = angle;
 
             SetVelocity(angle, speed);
         }
@@ -96,7 +95,6 @@ public class Entity : MonoBehaviour
         {
             float addangle = FindTurnSide() * 0.3f;
             angle = (angle + addangle) % 360;
-            rb.rotation = angle;
 
             SetVelocity(angle, speed);
         }
@@ -202,7 +200,7 @@ public class Entity : MonoBehaviour
         for (int i = 0; i < sensorCount; i++)
         {
             var radAngle = (angle + (i * 360 / sensorCount)) * Mathf.Deg2Rad;
-            distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround).distance;
+            distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround+entityData.whatIsShip).distance;
             if (distances[i] == 0)
             {
                 distances[i] = entityData.wallCheckDistance * speed;
