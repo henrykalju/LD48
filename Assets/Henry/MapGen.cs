@@ -338,12 +338,12 @@ public class MapGen : MonoBehaviour
                 //Instantiate(cube, new Vector3(-line_r_r[depth - 1].GetPosition(placing).x, placing - offset), Quaternion.Euler(Vector3.zero));
                 
                 //teeme 0-2, et oleks 50% võimalus, et tuleb kala
-                float prob = Random.Range(0f, 1/kala_prob);
+                float prob = Random.Range(0f, 1f);
                 //vaatame, milline kala tuleb (küigil sama võimalus tulla)
                 for (int i = 0; i < kalad.Length; i++)
                 {
                     //kui on soodne kala spawnimis võimalus, ss tee seda
-                    if (prob <= (i+1) / kalad.Length && prob > (i)/kalad.Length)
+                    if (prob <= (i+1) * kala_prob)
                     {
                         //pane see kala
                         GameObject kala = Instantiate(kalad[i]);
