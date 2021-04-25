@@ -8,7 +8,7 @@ public class MoveState : State
 
     // 0 - no 1 - front 2 - right 3 - left
     protected int isDetectingWall;
-    protected bool isPlayerInRange;
+    protected GameObject fishInRange;
     protected bool isTired;
 
 
@@ -24,7 +24,7 @@ public class MoveState : State
         isTired = true;
         base.Enter();
         entity.SetVelocity(entity.angle, entity.speed);
-        isPlayerInRange = entity.CheckPlayerInRange();
+        fishInRange = entity.CheckPlayerInRange();
     }
 
     public override void Exit()
@@ -45,6 +45,6 @@ public class MoveState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        isPlayerInRange = entity.CheckPlayerInRange();
+        fishInRange = entity.CheckPlayerInRange();
     }
 }

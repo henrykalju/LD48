@@ -23,6 +23,10 @@ public class Entity : MonoBehaviour
     [SerializeField] public Transform wallCheck;
     [SerializeField] public Transform playerCheck;
 
+    public GameObject fishInRange;
+
+    private float detectTime = 0;
+
     private Vector2 velocityWorkspace;
 
     public virtual void Start()
@@ -133,51 +137,36 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public virtual bool CheckPlayerInRange()
+    public virtual GameObject CheckPlayerInRange()
     {
-        if (!GameObject.FindGameObjectWithTag("Fish"))
+        if (Time.time > detectTime + 0.2f)
         {
-            return false;
-        }
-        GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
-        for (int i = 0; i < fishies.Length; i++)
-        {
-            Vector3 dir = fishies[i].transform.position - playerCheck.position;
-            if (Physics2D.CircleCast(playerCheck.position, 0.25f, dir, entityData.playerDetectRange, entityData.whatIsPlayer))
+            detectTime = Time.time;
+            if (!GameObject.FindGameObjectWithTag("Fish"))
             {
-                return true;
+                return null;
             }
+            GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
+            for (int i = 0; i < fishies.Length; i++)
+            {
+                Vector3 dir = fishies[i].transform.position - playerCheck.position;
+                if (Physics2D.CircleCast(playerCheck.position, 0.25f, dir, entityData.playerDetectRange, entityData.whatIsPlayer))
+                {
+                    return fishies[i];
+                }
+            }
+            return null;
         }
-        return false;
-    }
-
-    public virtual GameObject getNearestFish()
-    {
-        if (!GameObject.FindGameObjectWithTag("Fish"))
+        else
         {
             return null;
         }
-        GameObject[] fishies = GameObject.FindGameObjectsWithTag("Fish");
-        GameObject nearestFish = null;
-        float nearestFishDistance = entityData.playerDetectRange;
-        for (int i = 0; i < fishies.Length; i++)
-        {
 
-            Vector3 dir = fishies[i].transform.position - playerCheck.position;
-            float fishDistance = Physics2D.CircleCast(playerCheck.position, 0.25f, dir, entityData.playerDetectRange, entityData.whatIsPlayer).distance;
-
-            if (fishDistance < nearestFishDistance && fishDistance != 0)
-            {
-                nearestFish = fishies[i];
-                nearestFishDistance = fishDistance;
-            }
-        }
-        return nearestFish;
     }
 
     public virtual void CheckIfIsAttacking()
     {
-        GameObject fish = getNearestFish();
+        GameObject fish = CheckPlayerInRange();
         if (!fish)
         {
             isAttacking = false;
@@ -200,7 +189,7 @@ public class Entity : MonoBehaviour
         for (int i = 0; i < sensorCount; i++)
         {
             var radAngle = (angle + (i * 360 / sensorCount)) * Mathf.Deg2Rad;
-            distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround+entityData.whatIsShip).distance;
+            distances[i] = Physics2D.Raycast(wallCheck.position, new Vector2(Mathf.Cos(radAngle), Mathf.Sin(radAngle)), entityData.wallCheckDistance * speed, entityData.whatIsGround + entityData.whatIsShip).distance;
             if (distances[i] == 0)
             {
                 distances[i] = entityData.wallCheckDistance * speed;

@@ -31,6 +31,7 @@ public class E1_AttackState : AttackState
         if (isTired)
         {
             colliderScript.killedCount = 0;
+            hostile.fishInRange = null;
             stateMachine.ChangeState(hostile.moveState);
         }
         else
@@ -50,7 +51,7 @@ public class E1_AttackState : AttackState
 
     private void Follow()
     {
-        GameObject fish = entity.getNearestFish();
+        GameObject fish = hostile.fishInRange;
         if (!fish)
         {
             return;
@@ -63,7 +64,7 @@ public class E1_AttackState : AttackState
 
     private void Dash()
     {
-        GameObject fish = entity.getNearestFish();
+        GameObject fish = hostile.fishInRange;
         if (!fish)
         {
             return;
