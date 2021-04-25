@@ -19,7 +19,6 @@ public class PlayerControls : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Debug.Log(GameManager.Instance.NumberOfFish);
         Vector3 mousePosWorld = GetMouseInWorld();
         MoveTowards(mousePosWorld);
     }
