@@ -32,7 +32,7 @@ public class E1_AttackState : AttackState
             stateMachine.ChangeState(hostile.moveState);
         }
         else{
-            entity.CheckToNotCollideWithWall(new int[]{0},stateData.attackSpeed);
+            entity.CheckToNotCollideWithWall(new int[]{0},entity.speed);
         }
     }
 

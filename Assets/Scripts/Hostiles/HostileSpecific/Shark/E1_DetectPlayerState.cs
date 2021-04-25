@@ -24,10 +24,13 @@ public class E1_DetectPlayerState : DetectPlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (timedOut) {
+        entity.CheckToNotCollideWithWall(new int[] { -1, 0, 1 }, entity.speed);
+        if (timedOut)
+        {
             stateMachine.ChangeState(hostile.moveState);
         }
-        else if (isReadyToInteract) {
+        else if (isReadyToInteract)
+        {
             stateMachine.ChangeState(hostile.AttackState);
         }
     }

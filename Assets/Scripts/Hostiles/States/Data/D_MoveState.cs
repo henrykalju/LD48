@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newMoveData", menuName = "Data/State Data/Move State")]
 public class D_MoveState : ScriptableObject
 {
-    public float tiredDuration = 5.0f;
+    public float tiredDuration = 3.0f;
 }

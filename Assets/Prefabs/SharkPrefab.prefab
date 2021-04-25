@@ -41,7 +41,6 @@ GameObject:
   - component: {fileID: 5800864852401265398}
   - component: {fileID: 5800864852401265395}
   - component: {fileID: 5800864852401265392}
-  - component: {fileID: 5800864852401265393}
   - component: {fileID: 5800864852401265394}
   - component: {fileID: 5387108251627365471}
   - component: {fileID: 3047770484626249876}
@@ -140,25 +139,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!95 &5800864852401265393
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5800864852401265399}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!70 &5800864852401265394
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -245,6 +225,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityData: {fileID: 11400000, guid: e8286977bf04b204bbffa04f35d37c25, type: 2}
+  angle: 0
+  speed: 0
+  sensorCount: 24
+  distances: []
+  radiuses: []
+  noiseX: 0
   wallCheck: {fileID: 5800864851214502122}
   playerCheck: {fileID: 5800864853093663886}
   idleStateData: {fileID: 11400000, guid: 42b0d955e40a1bc4eb2df2717a66dacd, type: 2}
