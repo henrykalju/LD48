@@ -24,7 +24,8 @@ public class E2_MoveState : MoveState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (isPlayerInRange && !isTired) {
+        if (fishInRange && !isTired) {
+            hostile.fishInRange = fishInRange;
             stateMachine.ChangeState(hostile.detectPlayerState);
         }
     }

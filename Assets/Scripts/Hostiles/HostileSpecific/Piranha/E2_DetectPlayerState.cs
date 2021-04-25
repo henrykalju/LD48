@@ -26,6 +26,7 @@ public class E2_DetectPlayerState : DetectPlayerState
         base.LogicUpdate();
         if (timedOut)
         {
+            hostile.fishInRange = null;
             stateMachine.ChangeState(hostile.moveState);
         }
         else if (isReadyToInteract)
