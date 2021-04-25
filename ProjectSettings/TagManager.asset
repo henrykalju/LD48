@@ -12,6 +12,7 @@ TagManager:
   - Main
   - Settings
   - Credits
+  - FishHidden
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - endofsectionlayer
   - Hidden
   - FishHidden
-  - Shark
+  - Ship
   - 
   - 
   - 

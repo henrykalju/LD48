@@ -14,6 +14,8 @@ public class Hostile1 : Entity
     [SerializeField] private D_DetectPlayerState detectPlayerData;
     [SerializeField] private D_AttackState attackData;
 
+    [SerializeField] public AudioSource dashAudio;
+
     public override void Start()
     {
         base.Start();

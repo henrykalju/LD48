@@ -73,6 +73,7 @@ public class E1_AttackState : AttackState
         entity.rb.rotation = angle;
         //entity.rb.AddForce(entity.GetVector3DirToFish(fish));
         entity.SetVelocity(angle, stateData.attackSpeed);
+        hostile.dashAudio.Play();
         dashTime = Time.time;
     }
 }

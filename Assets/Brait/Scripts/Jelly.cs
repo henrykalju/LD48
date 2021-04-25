@@ -10,6 +10,8 @@ public class Jelly : MonoBehaviour
     [SerializeField] float slowForce = 0.01f;
     [SerializeField] float offset = 60f;
 
+    [SerializeField] AudioSource buzzAudio;
+
     [SerializeField] Rigidbody2D rbody;
 
     private float lastJump = 0;
@@ -44,6 +46,7 @@ public class Jelly : MonoBehaviour
         if (collision.gameObject.tag  == "Fish" && toKill != 0)
         {
             Destroy(collision.gameObject);
+            buzzAudio.Play();
             toKill = 0;
         }
     }
