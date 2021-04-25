@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412b987d3004e07488ae6bb4f67ea944, type: 3}
   m_Name: SharkMoveData
   m_EditorClassIdentifier: 
-  tiredDuration: 5
+  tiredDuration: 3

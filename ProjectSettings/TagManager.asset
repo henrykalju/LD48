@@ -19,8 +19,8 @@ TagManager:
   - Fish
   - Fish4
   - endofsectionlayer
-  - 
-  - 
+  - Hidden
+  - FishHidden
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: back far
+    uniqueID: 1383778405
+    locked: 0
   - name: env back
     uniqueID: 788153623
     locked: 0
@@ -54,4 +57,7 @@ TagManager:
     locked: 0
   - name: env front
     uniqueID: 4045873099
+    locked: 0
+  - name: rocks front
+    uniqueID: 1143814417
     locked: 0

@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallCheckDistance: 10
   movementSpeed: 3
-  attackSpeed: 6
-  playerDetectRange: 6
+  playerDetectRange: 13
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8

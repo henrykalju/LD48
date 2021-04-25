@@ -5,10 +5,11 @@ using UnityEngine;
 public class E1_AttackState : AttackState
 {
     private Hostile1 hostile;
+    private float dashTime;
     public E1_AttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_AttackState stateData, Hostile1 hostile) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.hostile = hostile;
-        
+
     }
 
     public override void Enter()
@@ -27,28 +28,50 @@ public class E1_AttackState : AttackState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (isTired){
+        if (isTired)
+        {
             colliderScript.killedCount = 0;
             stateMachine.ChangeState(hostile.moveState);
         }
-        else{
-            entity.CheckToNotCollideWithWall(new int[]{0},stateData.attackSpeed);
+        else
+        {
+            entity.CheckToNotCollideWithWall(new int[] { 0 }, entity.speed);
         }
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        if (Time.time > dashTime + stateData.dashDuration) {
+            Follow();
+        }
 
     }
-    private void Dash(){
+
+    private void Follow()
+    {
         GameObject fish = entity.getNearestFish();
-        if (!fish){
+        if (!fish)
+        {
+            return;
+        }
+        float angle = entity.GetAngleFromDir(entity.GetVector3DirToFish(fish));
+        entity.rb.rotation = angle;
+        //entity.rb.AddForce(entity.GetVector3DirToFish(fish));
+        entity.SetVelocity(angle, entity.speed);
+    }
+
+    private void Dash()
+    {
+        GameObject fish = entity.getNearestFish();
+        if (!fish)
+        {
             return;
         }
         float angle = entity.GetAngleFromDir(entity.GetVector3DirToFish(fish));
         entity.rb.rotation = angle;
         //entity.rb.AddForce(entity.GetVector3DirToFish(fish));
         entity.SetVelocity(angle, stateData.attackSpeed);
+        dashTime = Time.time;
     }
 }

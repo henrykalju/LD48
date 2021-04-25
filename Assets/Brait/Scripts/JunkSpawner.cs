@@ -28,7 +28,7 @@ public class JunkSpawner : MonoBehaviour
         int ran = Random.Range(0, junk.Length);
 
         GameObject junkObj = Instantiate(junk[ran], transform);
-        junkObj.transform.position = newPos;
+        junkObj.transform.localPosition = newPos;
         junkObj.transform.rotation = Quaternion.Euler(0, 0, rotation);
     }
 }

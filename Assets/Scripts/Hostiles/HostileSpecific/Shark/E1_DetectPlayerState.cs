@@ -24,10 +24,12 @@ public class E1_DetectPlayerState : DetectPlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (timedOut) {
+        if (timedOut)
+        {
             stateMachine.ChangeState(hostile.moveState);
         }
-        else if (isReadyToInteract) {
+        else if (isReadyToInteract)
+        {
             stateMachine.ChangeState(hostile.AttackState);
         }
     }

@@ -11,7 +11,6 @@ public class Entity : MonoBehaviour
     public bool isAttacking { get; set; }
 
     public Rigidbody2D rb { get; private set; }
-    public Animator anim { get; private set; }
     public GameObject aliveGO { get; private set; }
 
     public float angle;
@@ -20,6 +19,7 @@ public class Entity : MonoBehaviour
     public float[] distances;
     public float[] radiuses;
     public int noiseX;
+    public float noiseY;
     [SerializeField] public Transform wallCheck;
     [SerializeField] public Transform playerCheck;
 
@@ -28,13 +28,13 @@ public class Entity : MonoBehaviour
     public virtual void Start()
     {
         noiseX = 0;
+        noiseY = Random.Range(-10f, 10f);
         angle = 0;
         distances = new float[sensorCount];
         speed = entityData.movementSpeed;
-        radiuses = new float[] { 0.75f, 1.25f};
+        radiuses = new float[] { 0.75f, 1.25f };
         aliveGO = transform.Find("Alive").gameObject;
         rb = aliveGO.GetComponent<Rigidbody2D>();
-        anim = aliveGO.GetComponent<Animator>();
         stateMachine = new FiniteStateMachine();
     }
 
@@ -60,13 +60,14 @@ public class Entity : MonoBehaviour
         {
             for (int i = 0; i < sensorCount; i++)
             {
-                if (IsElementInList(j,radiusesToUse) && radiuses[j]*speed > distances[i] && distances[i] != 0)
+                if (IsElementInList(j, radiusesToUse) && radiuses[j] * speed > distances[i] && distances[i] != 0)
                 {
                     return j;
                 }
             }
         }
-        if (IsElementInList(-1,radiusesToUse)){
+        if (IsElementInList(-1, radiusesToUse))
+        {
             return -1;
         }
         return -2;
@@ -76,7 +77,7 @@ public class Entity : MonoBehaviour
     {
         if (checkFailed == -1)
         {
-            float addangle = (Mathf.PerlinNoise(noiseX * 0.01f, 0.0f) - 0.5f) * 1.5f;
+            float addangle = (Mathf.PerlinNoise(noiseX * 0.01f, noiseY) - 0.5f) * 1.5f;
             noiseX++;
             angle = (angle + addangle) % 360;
             rb.rotation = angle;
@@ -98,8 +99,8 @@ public class Entity : MonoBehaviour
             rb.rotation = angle;
 
             SetVelocity(angle, speed);
-        }        
-    
+        }
+
     }
     private int FindTurnSide()
     {
@@ -118,19 +119,19 @@ public class Entity : MonoBehaviour
         }
         if (leftSide / (distances.Length / 2) < radiuses[0])
         {
-            return -10;
+            return -12;
         }
         else if (rightSide / (distances.Length / 2) < radiuses[0])
         {
-            return 10;
+            return 12;
         }
         if (leftSide > rightSide)
         {
-            return 4;
+            return 5;
         }
         else
         {
-            return -4;
+            return -5;
         }
     }
 
@@ -144,7 +145,7 @@ public class Entity : MonoBehaviour
         for (int i = 0; i < fishies.Length; i++)
         {
             Vector3 dir = fishies[i].transform.position - playerCheck.position;
-            if (Physics2D.Raycast(playerCheck.position, dir, entityData.playerDetectRange, entityData.whatIsPlayer))
+            if (Physics2D.CircleCast(playerCheck.position, 0.25f, dir, entityData.playerDetectRange, entityData.whatIsPlayer))
             {
                 return true;
             }
@@ -165,7 +166,7 @@ public class Entity : MonoBehaviour
         {
 
             Vector3 dir = fishies[i].transform.position - playerCheck.position;
-            float fishDistance = Physics2D.Raycast(playerCheck.position, dir, entityData.playerDetectRange, entityData.whatIsPlayer).distance;
+            float fishDistance = Physics2D.CircleCast(playerCheck.position, 0.25f, dir, entityData.playerDetectRange, entityData.whatIsPlayer).distance;
 
             if (fishDistance < nearestFishDistance && fishDistance != 0)
             {
@@ -179,17 +180,20 @@ public class Entity : MonoBehaviour
     public virtual void CheckIfIsAttacking()
     {
         GameObject fish = getNearestFish();
-        if (!fish) {
+        if (!fish)
+        {
             isAttacking = false;
             return;
         }
         isAttacking = true;
     }
-    public virtual Vector3 GetVector3DirToFish(GameObject fish){
+    public virtual Vector3 GetVector3DirToFish(GameObject fish)
+    {
         Vector3 dir = fish.transform.position - aliveGO.transform.position;
         return dir;
     }
-    public virtual float GetAngleFromDir(Vector3 dir){
+    public virtual float GetAngleFromDir(Vector3 dir)
+    {
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         return angle;
     }
@@ -204,12 +208,13 @@ public class Entity : MonoBehaviour
                 distances[i] = entityData.wallCheckDistance * speed;
             }
         }
-        DoMove(CheckRadiuses(speed,radiusesToUse));
+        DoMove(CheckRadiuses(speed, radiusesToUse));
     }
-    public virtual bool IsElementInList(int e, int[] l){
+    public virtual bool IsElementInList(int e, int[] l)
+    {
         for (int i = 0; i < l.Length; i++)
         {
-            if (e==l[i])
+            if (e == l[i])
             {
                 return true;
             }

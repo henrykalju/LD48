@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6267652212503110805}
   - component: {fileID: 6267652212503110804}
   - component: {fileID: 6267652212503110807}
+  - component: {fileID: 4051070829642683642}
   m_Layer: 0
   m_Name: Jellyfish
   m_TagString: Untagged
@@ -142,3 +143,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &4051070829642683642
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6267652212503110806}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.5
