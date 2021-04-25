@@ -50,7 +50,6 @@ public class Entity : MonoBehaviour
     public virtual void FixedUpdate()
     {
         stateMachine.currentState.PhysicsUpdate();
-
     }
     public virtual void SetVelocity(float angle, float speed)
     {
@@ -76,7 +75,6 @@ public class Entity : MonoBehaviour
             return -1;
         }
         return -2;
-
     }
     public void DoMove(int checkFailed)
     {
@@ -151,7 +149,7 @@ public class Entity : MonoBehaviour
             {
                 Vector3 dir = fishies[i].transform.position - playerCheck.position;
                 RaycastHit2D hit = Physics2D.CircleCast(playerCheck.position, 0.25f, dir, entityData.playerDetectRange, entityData.whatIsPlayer);
-                if (hit && hit.collider.gameObject.layer.Equals("Fish"))
+                if (hit && hit.transform.tag == "Fish")
                 {
                     return fishies[i];
                 }
@@ -162,7 +160,6 @@ public class Entity : MonoBehaviour
         {
             return null;
         }
-
     }
 
     public virtual void CheckIfIsAttacking()
