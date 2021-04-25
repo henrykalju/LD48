@@ -19,6 +19,7 @@ public class PlayerControls : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        Debug.Log(GameManager.Instance.NumberOfFish);
         Vector3 mousePosWorld = GetMouseInWorld();
         MoveTowards(mousePosWorld);
     }
@@ -50,6 +51,7 @@ public class PlayerControls : MonoBehaviour
             GameObject fish = GameObject.Instantiate(fishPrefab, transform.parent);
             fish.transform.position = transform.position;
         }
+        GameManager.Instance.NumberOfFish = amount;
     }
 
     public void KillFish(int amount)

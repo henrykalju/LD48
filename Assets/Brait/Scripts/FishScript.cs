@@ -104,4 +104,9 @@ public class FishScript : MonoBehaviour
 
         return rotation;
     }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.NumberOfFish = -1;
+    }
 }
