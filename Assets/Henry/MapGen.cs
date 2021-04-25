@@ -240,7 +240,7 @@ public class MapGen : MonoBehaviour
                     koht += new Vector3(0, 3, 0);
                     //vrakid
                     Collider2D col = Physics2D.OverlapCircle(koht, 5, 11);
-                    print(col.ToString());
+                    //print(col.ToString());
                     GameObject a;
                     if (Random.value <= 0.5f)
                     {

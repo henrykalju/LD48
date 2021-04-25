@@ -2,20 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class UIcontroller : MonoBehaviour
 {
-    [SerializeField] TMP_Text text;
+    [SerializeField] TMP_Text size_text;
+    [SerializeField] private GameObject depth_text;
+
+    [SerializeField] private GameObject pause_btn;
+    [SerializeField] private GameObject resume_btn;
+    [SerializeField] private GameObject restart_btn;
+    [SerializeField] private GameObject menu_btn;
 
     private void Start()
     {
+        print(pause_btn.GetType());
         GameManager.Instance.onFishChange += ChangeText;
     }
 
     private void ChangeText()
     {
-        text.text = GameManager.Instance.NumberOfFish.ToString();
+        size_text.text = GameManager.Instance.NumberOfFish.ToString();
     }
+
+    public void PauseGame()
+    {
+        
+        print("pause");
+        
+        //stop phisycs
+        Time.timeScale = 0;
+        
+        resume_btn.gameObject.SetActive(true);
+        restart_btn.gameObject.SetActive(true);
+        menu_btn.gameObject.SetActive(true);
+
+        pause_btn.gameObject.SetActive(false);
+        depth_text.gameObject.SetActive(false);
+        size_text.gameObject.SetActive(false);
+    }
+
+    public void ResumeGame()
+    {
+        
+        print("resume");
+        
+        //start phisycs
+        Time.timeScale = 1;
+        
+        resume_btn.gameObject.SetActive(false);
+        restart_btn.gameObject.SetActive(false);
+        menu_btn.gameObject.SetActive(false);
+
+        pause_btn.gameObject.SetActive(true);
+        depth_text.gameObject.SetActive(true);
+        size_text.gameObject.SetActive(true);
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("MapGen");
+    }
+    
 
     public void OnDestroy()
     {
