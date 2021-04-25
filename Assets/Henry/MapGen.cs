@@ -23,7 +23,9 @@ public class MapGen : MonoBehaviour
     [SerializeField] private float laius;
     //max kaugus, kuhu map ulatab x pidi
     [SerializeField] private float ulatuvus;
-
+    [SerializeField] private float edasi_tagasi_sujuvus;
+    [SerializeField] private float laiuse_sujuvus;
+    
     //trigger, mis lõpetab sektsiooni ja kutsub update map funk
     [SerializeField] private GameObject endofsection;
 
@@ -76,6 +78,7 @@ public class MapGen : MonoBehaviour
     [SerializeField] private float kala_spawn_nurk_2;
     [SerializeField] private float kala_prob;
     [SerializeField] private float extra_prob;
+    [SerializeField] private float prop_prob;
     
     void Start()
     {
@@ -151,8 +154,8 @@ public class MapGen : MonoBehaviour
         for (int i = 0; i < l; i++)
         {
             //loeme "häälest" noise ja w
-            noise[i] = ulatuvus * (Mathf.PerlinNoise(noise_seed, (offset) * 0.07f) - 0.5f);
-            w[i] = laius * Mathf.PerlinNoise(noise_seed, (offset) * 0.07f) + 3f;
+            noise[i] = ulatuvus * (Mathf.PerlinNoise(noise_seed, (offset) * edasi_tagasi_sujuvus) - 0.5f);
+            w[i] = laius * Mathf.PerlinNoise(noise_seed, (offset) * laiuse_sujuvus) + 3f;
             
             //paneme vajalikud väärtused kirja punktidesse
             punktid_l[i] = new Vector3(noise[i] - w[i], -offset);
@@ -232,9 +235,25 @@ public class MapGen : MonoBehaviour
                     //ja muudame selle asukohta ja rotationit
                     a.transform.GetChild(0).GetComponent<SeaweedBush>().setPos(koht, Quaternion.Euler(0, 0, -place[1]));
                 }
-                else
+                else if (rand - seaweed_prob <= prop_prob && laius * Mathf.PerlinNoise(noise_seed, (offset+placing-l) * laiuse_sujuvus) + 3f >= 10)
                 {
+                    koht += new Vector3(0, 3, 0);
                     //vrakid
+                    Collider2D col = Physics2D.OverlapCircle(koht, 5, 11);
+                    print(col.ToString());
+                    GameObject a;
+                    if (Random.value <= 0.5f)
+                    {
+                        a = Instantiate(props[0]);
+                    }
+                    else
+                    {
+                        a = Instantiate(props[1]);
+                        a.transform.localScale = new Vector3(-1, 1, 1);
+                    }
+
+                    a.transform.position = koht;
+                    a.transform.rotation = Quaternion.Euler(0, 0, -place[1]);
                 }
             }
         }
@@ -267,13 +286,34 @@ public class MapGen : MonoBehaviour
                 //kui tahad, võid panna sinna kuubiku, kuhu saaks asju panna
                 //Instantiate(cube, koht, quaternion.Euler(Vector3.zero));
 
+                float rand = Random.value;
+                
                 //kui rnd value on soodne seaweedi kasvamiseks
-                if (Random.value < seaweed_prob)
+                if (rand < seaweed_prob)
                 {
                     //teeme seaweed
                     GameObject a = Instantiate(seaweed);
                     //ja muudame selle asukohta ja rotationit
                     a.transform.GetChild(0).GetComponent<SeaweedBush>().setPos(koht, Quaternion.Euler(0, 0, place[1]));
+                }else if (rand - seaweed_prob <= prop_prob && laius * Mathf.PerlinNoise(noise_seed, (offset+placing-l) * laiuse_sujuvus) + 3f >= 10)
+                {
+                    koht += new Vector3(0, 3, 0);
+                    //vrakid
+                    Collider2D col = Physics2D.OverlapCircle(koht, 5, 11);
+                    print(col.ToString());
+                    GameObject a;
+                    if (Random.value <= 0.5f)
+                    {
+                        a = Instantiate(props[0]);
+                        a.transform.localScale = new Vector3(-1, 1, 1);
+                    }
+                    else
+                    {
+                        a = Instantiate(props[1]);
+                    }
+
+                    a.transform.position = koht;
+                    a.transform.rotation = Quaternion.Euler(0, 0, -place[1]);
                 }
             }
         }
@@ -287,11 +327,11 @@ public class MapGen : MonoBehaviour
             //käime kõik läbi
             foreach (float[] place in goodPlacesOnTheLeft)
             {
-                print(place[0]);
-                print(place[1]);
+                //print(place[0]);
+                //print(place[1]);
                 //nagu enne
                 int placing = (int) place[0] + (int) Math.Floor(der_length / 2f);
-                float koht = ulatuvus * (Mathf.PerlinNoise(noise_seed, (offset-placing) * 0.07f) - 0.5f);
+                float koht = ulatuvus * (Mathf.PerlinNoise(noise_seed, (offset-placing) * edasi_tagasi_sujuvus) - 0.5f);
 
                 //nagu enne
                 //Instantiate(cube, new Vector3(-line_r_l[depth - 1].GetPosition(placing).x, placing-offset), Quaternion.Euler(Vector3.zero));
@@ -309,8 +349,8 @@ public class MapGen : MonoBehaviour
                         GameObject kala = Instantiate(kalad[i]);
                         //ja pane ta õigesse kohta
                         kala.transform.position = new Vector3(koht, -offset+placing, 0);
-                        print(koht);
-                        print(placing+l-offset);
+                        //print(koht);
+                        //print(placing+l-offset);
                     }
                 }
 

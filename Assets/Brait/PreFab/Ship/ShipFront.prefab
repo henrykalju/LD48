@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8370201327464916887}
   - component: {fileID: 6773689678223667457}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: parem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 9057091366039262886}
   - component: {fileID: 6601823919878864068}
   - component: {fileID: 2901871294700207568}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HidingColider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3697878138918726973}
   - component: {fileID: 4692839335471301851}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShipFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4467130535228435829}
   - component: {fileID: 5809592876850479810}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: paremtaga
   m_TagString: Untagged
   m_Icon: {fileID: 0}

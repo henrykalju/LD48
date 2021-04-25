@@ -317,7 +317,9 @@ MonoBehaviour:
   der_length: 2
   max_nurk: 60
   mesh_prefab: {fileID: 5465865961820498062, guid: ee21d06809a195543ac6e41656102145, type: 3}
-  props: []
+  props:
+  - {fileID: 4079384261001883781, guid: 18babf163281e0e45b8299e19ce09ee2, type: 3}
+  - {fileID: 3421144907095566516, guid: 01374520d40ed0b4985b7ae2b838f5b6, type: 3}
   kalad:
   - {fileID: 5800864852545973241, guid: 26d5fca45b79ea84994c7f54806ab897, type: 3}
   extras:
@@ -329,6 +331,7 @@ MonoBehaviour:
   kala_spawn_nurk_2: 180
   kala_prob: 0.1
   extra_prob: 0.15
+  prop_prob: 1
 --- !u!4 &1197395522
 Transform:
   m_ObjectHideFlags: 0
